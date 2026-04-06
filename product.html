@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX PRO — SC01 | SAVVY COMPUTERS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:    #000000;
+      --white:    #ffffff;
+      --zinc-100: #f4f4f5;
+      --zinc-200: #e4e4e7;
+      --zinc-300: #d4d4d8;
+      --zinc-400: #a1a1aa;
+      --zinc-500: #71717a;
+      --zinc-700: #3f3f46;
+      --zinc-800: #27272a;
+      --border-heavy: 2.5px solid #000;
+      --border-light: 1px solid #e4e4e7;
+      --font-d: 'Barlow Condensed', sans-serif;
+      --font-b: 'Barlow', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--white); color: var(--black); font-family: var(--font-b); line-height: 1.6; }
+    .wrap { max-width: 1320px; margin: 0 auto; padding: 0 2.5rem; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header { position: sticky; top: 0; z-index: 1000; background: var(--white); border-bottom: var(--border-heavy); }
+    .nav-inner { display: flex; align-items: center; height: 56px; }
+    .logo { font-family: var(--font-d); font-weight: 900; font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 2rem; margin: 0 auto; }
+    .nav-links a { font-family: var(--font-d); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--zinc-500); }
+
+    /* PRODUCT PAGE */
+    .p-grid { display: grid; grid-template-columns: 1fr 480px; min-height: calc(100vh - 56px); }
+    .p-visual { background: var(--zinc-100); border-right: var(--border-heavy); position: relative; display: flex; align-items: center; justify-content: center; }
+    .p-img { width: 100%; height: 100%; object-fit: cover; }
+    .p-info { padding: 6rem 4rem; display: flex; flex-direction: column; gap: 3rem; }
+    .p-eyebrow { font-family: var(--font-d); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--zinc-400); }
+    .p-title { font-family: var(--font-d); font-weight: 900; font-size: 4rem; text-transform: uppercase; line-height: 0.9; letter-spacing: -0.01em; }
+    .p-price { font-family: var(--font-d); font-weight: 900; font-size: 2.2rem; }
+    .p-desc { font-size: 0.95rem; color: var(--zinc-700); line-height: 1.7; }
+    
+    .spec-grid { display: grid; gap: 1.5rem; }
+    .spec-item { display: flex; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: var(--border-light); }
+    .spec-lbl { font-family: var(--font-d); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: var(--zinc-400); letter-spacing: 0.1em; }
+    .spec-val { font-family: var(--font-d); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; text-align: right; }
+
+    .add-btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 1.5rem; background: var(--black); color: var(--white); font-family: var(--font-d); font-weight: 900; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s; border: none; }
+    .add-btn:hover { background: var(--zinc-800); transform: translateY(-3px); }
+
+    .p-badges { display: flex; gap: 2rem; padding-top: 2rem; border-top: var(--border-heavy); }
+    .badge-item { display: flex; flex-direction: column; gap: 0.4rem; }
+    .badge-h { font-family: var(--font-d); font-weight: 800; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .badge-t { font-size: 0.75rem; color: var(--zinc-500); }
+
+    @media (max-width: 1024px) {
+      .p-grid { grid-template-columns: 1fr; }
+      .p-visual { height: 60vh; border-right: none; border-bottom: var(--border-heavy); }
+      .p-info { padding: 4rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="nav-inner">
+        <a href="index.html" class="logo">Savvy Computers</a>
+        <div class="nav-links">
+          <a href="shop.html">Systems</a>
+          <a href="index.html#benchmark">Hardware</a>
+          <a href="index.html#process">Consult</a>
+          <a href="index.html#gallery">Archive</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="p-grid">
+      <div class="p-visual">
+        <img src="public/images/signature-sc01.png" alt="Apex Pro — SC01" class="p-img">
+        <div style="position: absolute; bottom: 3rem; left: 3rem; background: var(--black); color: var(--white); padding: 0.6rem 1rem; font-family: var(--font-d); font-weight: 800; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;">
+          * Signature SC-01 Series
+        </div>
+      </div>
+
+      <div class="p-info">
+        <div>
+          <div class="p-eyebrow">Performance Series — SC01</div>
+          <h1 class="p-title">Apex Pro</h1>
+          <div class="p-price" style="margin-top: 1rem;">$4,499.00 <span style="font-size: 0.8rem; color: var(--zinc-400); font-weight: 600; margin-left: 0.5rem;">AUD</span></div>
+        </div>
+
+        <p class="p-desc">The flagship enthusiast build. Engineered for uncompromising 4K performance and maximum thermal headroom. Every APEX PRO is meticulously hand-tuned for stability and noise efficiency.</p>
+
+        <div class="spec-grid">
+          <div class="spec-item"><div class="spec-lbl">CPU</div><div class="spec-val">Intel Core i9-14900K</div></div>
+          <div class="spec-item"><div class="spec-lbl">GPU</div><div class="spec-val">NVIDIA RTX 4080 Super (16GB)</div></div>
+          <div class="spec-item"><div class="spec-lbl">Memory</div><div class="spec-val">64GB DDR5 6400MHz</div></div>
+          <div class="spec-item"><div class="spec-lbl">Storage</div><div class="spec-val">2TB Gen4 M.2 NVMe SSD</div></div>
+          <div class="spec-item"><div class="spec-lbl">Case</div><div class="spec-val">Savvy Limited-01 Chassis</div></div>
+        </div>
+
+        <button class="add-btn" onclick="location.href='checkout.html'">Initialize Build →</button>
+
+        <div class="p-badges">
+          <div class="badge-item">
+            <div class="badge-h">Build Time</div>
+            <div class="badge-t">7-10 Business Days</div>
+          </div>
+          <div class="badge-item">
+            <div class="badge-h">Warranty</div>
+            <div class="badge-t">2yr Premium Support</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
