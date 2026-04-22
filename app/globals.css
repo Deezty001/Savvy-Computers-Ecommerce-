@@ -94,7 +94,7 @@ body::before {
 }
 
 @media (max-width: 768px) {
-  .wrap { padding: 0 1.5rem; }
+  .wrap { padding: 0 2rem; }
 }
 
 /* Global Reveal & Stagger Animation */

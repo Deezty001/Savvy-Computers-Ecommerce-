@@ -230,25 +230,28 @@ export default function CategoryLayout({
           }}>
             <div style={{ 
               fontFamily: 'var(--font-d)', 
-              fontSize: '0.75rem', 
+              fontSize: '0.7rem', 
               fontWeight: 800, 
-              letterSpacing: '0.15em', 
+              letterSpacing: '0.12em', 
               color: 'var(--text-dim)',
               textTransform: 'uppercase',
               display: 'flex',
               alignItems: 'center',
-              gap: '1.5rem'
+              justifyContent: 'space-between',
+              width: '100%',
+              gap: '1rem'
             }}>
-              <span>SHOWING <span style={{ color: 'var(--white)' }}>{filteredProducts.length}</span> SYSTEMS</span>
-              
-              <MobileSpecFilter accentColor={accentColor} getHref={getFilterHref} />
-            </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <span>{filteredProducts.length} SYSTEMS</span>
+                <MobileSpecFilter accentColor={accentColor} getHref={getFilterHref} />
+              </div>
 
-            <SortDropdown 
-              currentSort={searchParams.get('sort')}
-              getHref={getFilterHref}
-              accentColor={accentColor}
-            />
+              <SortDropdown 
+                currentSort={searchParams.get('sort')}
+                getHref={getFilterHref}
+                accentColor={accentColor}
+              />
+            </div>
           </div>
 
           {/* Product Grid */}
@@ -298,14 +301,13 @@ export default function CategoryLayout({
         .filter-bar::-webkit-scrollbar { display: none; }
 
         @media (max-width: 768px) {
-          .category-content { flex-direction: column; gap: 4rem !important; }
+          .category-content { flex-direction: column; gap: 3rem !important; padding: 2rem 0 !important; }
           .filter-bar {
-            width: calc(100vw) !important;
-            margin-left: -1.5rem !important;
-            border-left: none !important;
-            border-right: none !important;
-            border-radius: 0 !important;
-            padding: 0.75rem 1.5rem !important;
+            width: 100% !important;
+            margin-left: 0 !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            border-radius: 4px !important;
+            padding: 0.6rem 1rem !important;
           }
         }
       `}} />
