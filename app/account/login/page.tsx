@@ -1,7 +1,7 @@
 // @ts-nocheck
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -9,7 +9,7 @@ import { MoveRight, Lock, Mail, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { supabase } from '@/lib/supabase/client';
 
-export default function LoginPage() {
+function LoginContent() {
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,8 +37,6 @@ export default function LoginPage() {
       setError(error.message);
       setIsLoading(false);
     } else {
-      // AuthContext handles the redirect via useEffect/subscription if needed, 
-      // but usually we redirect here too.
       window.location.href = '/account';
     }
   };
@@ -195,6 +193,14 @@ export default function LoginPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div style={{ background: 'var(--bg)', minHeight: '100vh' }} />}>
+      <LoginContent />
+    </Suspense>
   );
 }
 
