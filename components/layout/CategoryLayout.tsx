@@ -125,10 +125,10 @@ export default function CategoryLayout({
                   style={{ 
                     display: 'flex', 
                     alignItems: 'center', 
-                    gap: '1.5rem',
+                    gap: '1rem',
                     background: 'rgba(255,255,255,0.02)',
                     border: '1px solid rgba(255,255,255,0.05)',
-                    padding: '0.6rem 1.5rem',
+                    padding: '0.5rem 1.25rem',
                     borderRadius: '2px',
                     overflowX: 'auto',
                     WebkitOverflowScrolling: 'touch',
@@ -137,20 +137,20 @@ export default function CategoryLayout({
                 >
                   <div style={{ 
                     fontFamily: 'var(--font-d)', 
-                    fontSize: '0.75rem', 
+                    fontSize: '0.65rem', 
                     fontWeight: 800, 
-                    letterSpacing: '0.2em', 
+                    letterSpacing: '0.15em', 
                     color: accentColor, 
                     textTransform: 'uppercase',
                     whiteSpace: 'nowrap',
                     opacity: 0.8
                   }}>
-                    {group.label}
+                    {group.label.replace('BY ', '')}
                   </div>
                   
-                  <div style={{ width: '1px', height: '14px', background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
+                  <div style={{ width: '1px', height: '12px', background: 'rgba(255,255,255,0.1)', flexShrink: 0 }} />
 
-                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '0.25rem', alignItems: 'center' }}>
                     {group.options.map((opt) => {
                       const isActive = pathname === opt.href || searchParams.get(opt.param) === opt.value;
                       return (
@@ -160,13 +160,13 @@ export default function CategoryLayout({
                           scroll={false}
                           style={{
                             fontFamily: 'var(--font-d)',
-                            fontSize: '0.8rem',
+                            fontSize: '0.75rem',
                             fontWeight: 700,
-                            letterSpacing: '0.1em',
+                            letterSpacing: '0.08em',
                             textTransform: 'uppercase',
                             textDecoration: 'none',
                             color: isActive ? 'var(--white)' : 'rgba(255,255,255,0.3)',
-                            padding: '0.6rem 1rem',
+                            padding: '0.5rem 0.75rem',
                             borderRadius: '2px',
                             background: isActive ? 'rgba(255,255,255,0.05)' : 'transparent',
                             transition: 'all 0.3s ease',
