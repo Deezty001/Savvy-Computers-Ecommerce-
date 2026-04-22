@@ -22,6 +22,7 @@ export interface Product {
   images: string[];
   stock: number;
   featured?: boolean;
+  tags?: string[];
 }
 
 export const products: Product[] = [
