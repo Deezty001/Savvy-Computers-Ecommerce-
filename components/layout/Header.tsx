@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from "next/link";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu, X, MoveRight } from "lucide-react";
 import { useCart } from "@/lib/cart/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
 import MegaMenu from './MegaMenu';
