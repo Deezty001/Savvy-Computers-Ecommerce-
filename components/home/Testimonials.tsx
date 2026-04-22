@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client';
 
 import React from 'react';
@@ -28,24 +27,29 @@ export default function Testimonials() {
           <div style={{ fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: 'var(--fs-xs)', letterSpacing: '0.15em', color: 'var(--text-muted)' }}>REVIEWS →</div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+        <div className="res-grid-3">
           {testimonials.map((t, idx) => (
-            <div key={idx} style={{ 
+            <div key={idx} className="testimonial-card" style={{ 
               background: 'var(--bg-offset)', 
-              padding: '4rem', 
+              padding: '2.5rem', 
               border: '1px solid var(--border)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '3rem'
+              gap: '2rem'
             }}>
               <div style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.25rem', color: 'var(--accent-light)' }}>{t.id}</div>
-              <p style={{ fontSize: 'var(--fs-base)', lineHeight: '1.7', color: 'var(--text-muted)', flex: 1 }}>"{t.text}"</p>
-              <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.72rem', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>*</span> VERIFIED USER
+              <p style={{ fontSize: '1rem', lineHeight: '1.7', color: 'var(--text-muted)', flex: 1 }}>"{t.text}"</p>
+              <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span style={{ fontSize: '1.1rem' }}>*</span> VERIFIED USER
               </div>
             </div>
           ))}
         </div>
+        <style jsx>{`
+          @media (max-width: 768px) {
+            .testimonial-card { padding: 1.5rem !important; }
+          }
+        `}</style>
       </div>
     </section>
   );
