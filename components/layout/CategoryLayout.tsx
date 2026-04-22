@@ -186,7 +186,7 @@ export default function CategoryLayout({
         </div>
       </div>
 
-      <div className="wrap category-content" style={{ display: 'flex', gap: '4rem', padding: '3rem 0 8rem' }}>
+      <div className="wrap category-content" style={{ display: 'flex', gap: '4rem', paddingTop: '3rem', paddingBottom: '8rem' }}>
         {/* Sidebar Filters */}
         <aside className="hide-tablet" style={{ width: '220px', flexShrink: 0 }}>
           <div style={{ position: 'sticky', top: '140px', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
@@ -301,7 +301,7 @@ export default function CategoryLayout({
         .filter-bar::-webkit-scrollbar { display: none; }
 
         @media (max-width: 768px) {
-          .category-content { flex-direction: column; gap: 3rem !important; padding: 2rem 0 !important; }
+          .category-content { flex-direction: column; gap: 3rem !important; padding-top: 2rem !important; padding-bottom: 2rem !important; }
           .filter-bar {
             width: 100% !important;
             margin-left: 0 !important;
