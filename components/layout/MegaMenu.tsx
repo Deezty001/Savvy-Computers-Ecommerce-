@@ -90,7 +90,7 @@ export default function MegaMenu({ activeType, onClose }: MegaMenuProps) {
               top: '100%',
               left: 0,
               width: '100%',
-              background: '#0a0a0a',
+              background: 'var(--bg)',
               borderBottom: '1px solid rgba(173, 133, 106, 0.2)',
               zIndex: 100,
             }}
@@ -132,8 +132,8 @@ export default function MegaMenu({ activeType, onClose }: MegaMenuProps) {
                           className="nav-card-inner"
                           style={{ 
                             padding: '1.75rem 1.5rem', 
-                            background: 'rgba(255,255,255,0.01)', 
-                            border: '1px solid rgba(255,255,255,0.03)',
+                            background: 'rgba(255,255,255,0.03)', 
+                            border: '1px solid rgba(255,255,255,0.08)',
                             borderRadius: '2px',
                             transition: 'all 0.4s ease',
                             display: 'flex',

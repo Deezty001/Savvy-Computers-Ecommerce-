@@ -1,9 +1,9 @@
 :root {
-  --bg: #121212;
-  --bg-offset: #1a1a1a;
+  --bg: #141414;
+  --bg-offset: #1c1c1c;
   --text: #ffffff;
-  --text-muted: #b0b0b0;
-  --text-dim: #808080;
+  --text-muted: #d0d0d0;
+  --text-dim: #909090;
   --accent: #3d342d; 
   --accent-light: #ad856a;
   --accent-bronze: #8b5a2b; 
@@ -89,7 +89,7 @@ body::before {
 }
 
 @media (max-width: 768px) {
-  .res-grid-2, .res-grid-3, .res-grid-4 { grid-template-columns: 1fr; gap: 2rem; }
+  .res-grid-2, .res-grid-3, .res-grid-4 { grid-template-columns: 1fr 1fr; gap: 1rem; }
   .res-grid-hero { gap: 3rem; }
 }
 

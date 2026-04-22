@@ -36,11 +36,11 @@ export default function ProductCard({ name, cpu, gpu, price, savings, img, specs
         
         {/* Header Block - Fixed height to prevent sagging */}
         <div style={{
-          padding: '1.5rem 1rem',
+          padding: '1.25rem 0.75rem',
           background: 'rgba(255,255,255,0.03)',
           borderBottom: '1px solid var(--border)',
           textAlign: 'center',
-          minHeight: '110px',
+          minHeight: '90px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
@@ -48,21 +48,21 @@ export default function ProductCard({ name, cpu, gpu, price, savings, img, specs
           <h3 style={{
             fontFamily: 'var(--font-d)',
             fontWeight: 900,
-            fontSize: '1.25rem',
+            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
             textTransform: 'uppercase',
-            letterSpacing: '0.1em',
+            letterSpacing: '0.05em',
             color: 'var(--white)',
-            marginBottom: '0.4rem'
+            marginBottom: '0.25rem'
           }}>
             {name}
           </h3>
           <p style={{
-            fontSize: '0.6rem',
+            fontSize: '0.55rem',
             fontWeight: 700,
-            letterSpacing: '0.15em',
-            color: 'var(--text-muted)',
+            letterSpacing: '0.1em',
+            color: 'var(--text-dim)',
             textTransform: 'uppercase',
-            lineHeight: 1.4,
+            lineHeight: 1.3,
             opacity: 0.8
           }}>
             {cpu} <br/> {gpu}
@@ -146,18 +146,18 @@ export default function ProductCard({ name, cpu, gpu, price, savings, img, specs
 
         {/* Footer Block */}
         <div style={{
-          padding: '2rem',
+          padding: 'clamp(1rem, 4vw, 2rem)',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
-          gap: '1.25rem',
+          gap: '1rem',
           marginTop: 'auto'
         }}>
           <div>
             <div style={{
               fontFamily: 'var(--font-d)',
               fontWeight: 900,
-              fontSize: '1.75rem',
+              fontSize: 'clamp(1.25rem, 5vw, 1.75rem)',
               color: 'var(--white)',
               letterSpacing: '0.05em'
             }}>
@@ -165,11 +165,11 @@ export default function ProductCard({ name, cpu, gpu, price, savings, img, specs
             </div>
             {savings && (
               <div style={{
-                fontSize: '0.75rem',
+                fontSize: '0.65rem',
                 fontWeight: 800,
                 letterSpacing: '0.1em',
                 color: 'var(--accent-light)',
-                marginTop: '0.25rem',
+                marginTop: '0.2rem',
                 textTransform: 'uppercase'
               }}>
                 SAVE {savings}
@@ -180,11 +180,11 @@ export default function ProductCard({ name, cpu, gpu, price, savings, img, specs
           <div className="btn btn-solid" style={{
             width: '100%',
             justifyContent: 'center',
-            padding: '1rem',
-            fontSize: '0.8rem',
-            letterSpacing: '0.2em'
+            padding: '0.75rem',
+            fontSize: '0.7rem',
+            letterSpacing: '0.15em'
           }}>
-            VIEW PRODUCT
+            VIEW
           </div>
         </div>
       </div>

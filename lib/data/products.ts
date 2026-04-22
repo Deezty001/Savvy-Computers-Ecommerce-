@@ -45,7 +45,8 @@ export const products: Product[] = [
       psu: '750W 80+ Gold SFX'
     },
     images: [],
-    stock: 12
+    stock: 12,
+    tags: ['1440p', 'stealth', 'compact']
   },
   {
     id: 'apex-pro',
@@ -67,7 +68,8 @@ export const products: Product[] = [
       psu: '1000W 80+ Gold'
     },
     images: [],
-    stock: 5
+    stock: 5,
+    tags: ['4k', 'stealth', 'tower']
   },
   {
     id: 'apex-ws',
@@ -89,7 +91,70 @@ export const products: Product[] = [
       psu: '1200W Platinum'
     },
     images: [],
-    stock: 3
+    stock: 3,
+    tags: ['cad', 'rendering', 'simulation', 'tower']
+  },
+  {
+    id: 'cad-expert-v1',
+    name: 'PRECISION CAD V1',
+    slug: 'precision-cad-v1',
+    series: '* Engineering Series',
+    desc: 'Intel i9 / RTX 4500 Ada. Certified for SolidWorks and AutoCAD.',
+    shortDesc: 'The definitive engineering workstation. Balanced for high-frequency modeling and complex assembly tasks.',
+    price: 5299,
+    tag: 'Workstation Series',
+    category: 'workstation',
+    specs: {
+      cpu: 'Intel Core i9-14900K',
+      gpu: 'NVIDIA RTX 4500 Ada 24GB',
+      ram: '64GB DDR5 6000MHz',
+      storage: '2TB NVMe SSD'
+    },
+    images: [],
+    stock: 6,
+    tags: ['cad', 'engineering', 'tower']
+  },
+  {
+    id: 'ai-node-01',
+    name: 'AI COMPUTE NODE',
+    slug: 'ai-compute-node',
+    series: '* AI & ML Series',
+    desc: 'Dual RTX 4090 / 192GB RAM. Designed for LLM training and data science.',
+    shortDesc: 'Extreme compute density for AI professionals. Optimized for local model training and massive dataset processing.',
+    price: 11499,
+    tag: 'Workstation Series',
+    category: 'workstation',
+    specs: {
+      cpu: 'Intel Core i9-14900KS',
+      gpu: '2x NVIDIA RTX 4090 24GB',
+      ram: '192GB DDR5 Memory',
+      storage: '4TB NVMe SSD'
+    },
+    images: [],
+    stock: 2,
+    tags: ['ai', 'ml', 'tower']
+  },
+  {
+    id: 'sim-racer-o1',
+    name: 'SIM-RACER ONE',
+    slug: 'sim-racer-one',
+    series: '* Sim-Optimised',
+    desc: 'AMD Ryzen 7 7800X3D / RTX 4080. The ultimate frame-rate machine for sim racing.',
+    shortDesc: 'Purpose-built for zero-latency, high-refresh racing. Optimized for triple 1440p or ultra-wide displays.',
+    price: 5499,
+    tag: 'Simulation Series',
+    category: 'sim',
+    specs: {
+      cpu: 'AMD Ryzen 7 7800X3D',
+      gpu: 'NVIDIA RTX 4080 Super 16GB',
+      ram: '32GB DDR5 6000MHz CL30',
+      storage: '1TB Gen5 NVMe SSD',
+      motherboard: 'X670E Carbon Wifi',
+      psu: '850W 80+ Gold'
+    },
+    images: [],
+    stock: 4,
+    tags: ['racing', 'sim']
   },
   {
     id: 'apex-slim',
@@ -110,7 +175,8 @@ export const products: Product[] = [
       psu: '750W 80+ Platinum SFX'
     },
     images: [],
-    stock: 8
+    stock: 8,
+    tags: ['4k', 'compact', 'stealth']
   },
   {
     id: 'axis-pro',

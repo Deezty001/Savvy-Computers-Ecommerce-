@@ -96,18 +96,19 @@ export default function BuildLab() {
 function PriorityNotice({ icon, label, count }: any) {
   return (
     <div style={{ 
-      background: 'rgba(255,255,255,0.02)', 
-      border: '1px solid rgba(255,255,255,0.05)', 
-      padding: '0.75rem 1.25rem', 
-      borderRadius: '6px',
+      background: 'rgba(255,255,255,0.03)', 
+      border: '1px solid rgba(255,255,255,0.08)', 
+      padding: '1.25rem 1.5rem', 
+      borderRadius: '4px',
       display: 'flex',
       alignItems: 'center',
-      gap: '1rem'
+      gap: '1.25rem',
+      boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
     }}>
-      <div style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '4px' }}>{icon}</div>
+      <div style={{ padding: '0.6rem', background: 'rgba(255,255,255,0.02)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.05)' }}>{icon}</div>
       <div>
-        <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--white)' }}>{count}</div>
-        <div style={{ fontSize: '0.55rem', fontWeight: 700, color: 'var(--text-dim)', letterSpacing: '0.1em' }}>{label}</div>
+        <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--white)', lineHeight: 1 }}>{count}</div>
+        <div style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--text-dim)', letterSpacing: '0.15em', marginTop: '0.4rem', textTransform: 'uppercase' }}>{label}</div>
       </div>
     </div>
   );
@@ -124,53 +125,63 @@ function BuildCard({ id, name, customer, deadline, status, progress, specs, isEx
 
   return (
     <div style={{ 
-      background: isExpanded ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.01)', 
-      border: isExpanded ? '1px solid rgba(173, 133, 106, 0.3)' : '1px solid rgba(255,255,255,0.05)',
-      borderRadius: '8px',
+      background: isExpanded ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)', 
+      border: isExpanded ? '1px solid rgba(173, 133, 106, 0.4)' : '1px solid rgba(255,255,255,0.08)',
+      borderRadius: '4px',
       overflow: 'hidden',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.3s ease',
+      boxShadow: isExpanded ? '0 10px 30px rgba(0,0,0,0.4)' : 'none'
     }}>
       {/* Main Header Row */}
       <div 
         onClick={onToggle}
         style={{ 
-          padding: '1rem 1.5rem', 
+          padding: '1.25rem 1.5rem', 
           display: 'grid', 
-          gridTemplateColumns: '80px 2.5fr 1.5fr 1fr 30px', 
+          gridTemplateColumns: '100px 2.5fr 2fr 1.2fr 40px', 
           alignItems: 'center',
           cursor: 'pointer'
         }}
       >
-        <span style={{ fontSize: '0.65rem', color: 'var(--text-dim)', fontWeight: 600 }}>{id}</span>
+        <span style={{ fontSize: '0.7rem', color: 'var(--text-dim)', fontWeight: 800, letterSpacing: '0.05em' }}>{id}</span>
         
         <div>
-          <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--white)' }}>{name}</div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: '0.1rem' }}>{customer}</div>
+          <div style={{ fontSize: '1rem', fontWeight: 900, color: 'var(--white)', letterSpacing: '0.02em' }}>{name}</div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '0.2rem', fontWeight: 500 }}>{customer}</div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', paddingRight: '2rem' }}>
             {stages.map((s, i) => (
-              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem' }}>
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem' }}>
                 <div style={{ 
-                  width: '6px', height: '6px', borderRadius: '50%', 
+                  width: '8px', height: '8px', borderRadius: '1px', // Square dots for engineering look
                   background: s.reached ? 'var(--accent-light)' : 'rgba(255,255,255,0.1)',
-                  boxShadow: s.reached ? '0 0 8px var(--accent-light)' : 'none'
+                  boxShadow: s.reached ? '0 0 10px var(--accent-light)' : 'none'
                 }} />
-                <span style={{ fontSize: '0.45rem', fontWeight: 800, color: s.reached ? 'var(--white)' : 'var(--text-dim)', letterSpacing: '0.05em' }}>{s.label}</span>
+                <span style={{ fontSize: '0.5rem', fontWeight: 900, color: s.reached ? 'var(--white)' : 'var(--text-dim)', letterSpacing: '0.05em' }}>{s.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div style={{ textAlign: 'right', paddingRight: '1.5rem' }}>
-          <div style={{ fontSize: '0.65rem', fontWeight: 800, color: deadline.includes('4H') ? '#f87171' : 'var(--accent-light)', letterSpacing: '0.05em' }}>
+        <div style={{ textAlign: 'right', paddingRight: '2rem' }}>
+          <div style={{ 
+            fontSize: '0.7rem', 
+            fontWeight: 900, 
+            color: deadline.includes('4H') ? '#f87171' : 'var(--accent-light)', 
+            letterSpacing: '0.1em',
+            background: deadline.includes('4H') ? 'rgba(248, 113, 113, 0.1)' : 'rgba(173, 133, 106, 0.1)',
+            padding: '0.4rem 0.75rem',
+            borderRadius: '2px',
+            display: 'inline-block'
+          }}>
             {deadline}
           </div>
         </div>
 
-        <div style={{ color: 'var(--text-dim)' }}>
-          {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        <div style={{ color: 'var(--text-dim)', textAlign: 'right' }}>
+          {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </div>
       </div>
 
@@ -182,38 +193,55 @@ function BuildCard({ id, name, customer, deadline, status, progress, specs, isEx
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={{ borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(0,0,0,0.1)' }}
+            style={{ borderTop: '1px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.2)' }}
           >
-            <div style={{ padding: '1.5rem 2.5rem', display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2rem' }}>
+            <div style={{ padding: '2rem 2.5rem', display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '3rem' }}>
               
               {/* Build Manifest */}
               <div>
-                <h4 style={{ fontSize: '0.55rem', fontWeight: 800, color: 'var(--accent-light)', letterSpacing: '0.15em', marginBottom: '1rem' }}>SYSTEM MANIFEST</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <h4 style={{ fontSize: '0.65rem', fontWeight: 900, color: 'var(--accent-light)', letterSpacing: '0.2em', marginBottom: '1.5rem', textTransform: 'uppercase' }}>SYSTEM MANIFEST</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   {specs.map((spec: string, i: number) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                      <div style={{ width: '3px', height: '3px', background: 'var(--accent-light)', borderRadius: '50%' }} />
-                      <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.8)', fontWeight: 400 }}>{spec}</span>
+                    <div key={i} style={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '0.75rem', 
+                      background: 'rgba(255,255,255,0.02)', 
+                      padding: '0.75rem',
+                      borderRadius: '2px',
+                      border: '1px solid rgba(255,255,255,0.03)'
+                    }}>
+                      <div style={{ width: '4px', height: '4px', background: 'var(--accent-light)', borderRadius: '1px' }} />
+                      <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.9)', fontWeight: 500 }}>{spec}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Technical Logs / Actions */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                 <div>
-                  <h4 style={{ fontSize: '0.55rem', fontWeight: 800, color: 'var(--accent-light)', letterSpacing: '0.15em', marginBottom: '0.75rem' }}>INTERNAL NOTES</h4>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)', lineHeight: 1.5, fontWeight: 400 }}>
+                  <h4 style={{ fontSize: '0.65rem', fontWeight: 900, color: 'var(--accent-light)', letterSpacing: '0.2em', marginBottom: '1rem', textTransform: 'uppercase' }}>INTERNAL NOTES</h4>
+                  <div style={{ 
+                    padding: '1rem', 
+                    background: 'rgba(173, 133, 106, 0.03)', 
+                    borderLeft: '2px solid var(--accent-light)',
+                    fontSize: '0.8rem', 
+                    color: 'var(--text-muted)', 
+                    lineHeight: 1.6, 
+                    fontWeight: 400 
+                  }}>
                     Customer requested a custom bronze badge on the PSU shroud. Motherboard bios updated to v1.4.
-                  </p>
+                  </div>
                 </div>
                 
-                <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto' }}>
-                  <button className="btn btn-solid" style={{ flex: 1, padding: '0.6rem', fontSize: '0.65rem', fontWeight: 700 }}>PRINT LABELS</button>
+                <div style={{ display: 'flex', gap: '1rem', marginTop: 'auto' }}>
+                  <button className="btn btn-solid" style={{ flex: 1, padding: '0.75rem', fontSize: '0.7rem', fontWeight: 900, letterSpacing: '0.1em' }}>PRINT LABELS</button>
                   <button style={{ 
-                    flex: 1, padding: '0.6rem', background: 'rgba(255,255,255,0.05)', 
+                    flex: 1, padding: '0.75rem', background: 'rgba(255,255,255,0.05)', 
                     border: '1px solid rgba(255,255,255,0.1)', color: 'var(--white)',
-                    fontSize: '0.65rem', fontWeight: 700, borderRadius: '4px', cursor: 'pointer'
+                    fontSize: '0.7rem', fontWeight: 900, borderRadius: '4px', cursor: 'pointer',
+                    letterSpacing: '0.1em'
                   }}>MARK COMPLETE</button>
                 </div>
               </div>

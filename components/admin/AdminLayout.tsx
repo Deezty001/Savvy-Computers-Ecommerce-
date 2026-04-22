@@ -18,13 +18,14 @@ export default function AdminLayout({ children, title }: { children: React.React
   const pathname = usePathname();
 
   return (
-    <div style={{ background: '#0a0a0a', color: 'var(--white)', minHeight: '100vh', display: 'flex' }}>
+    <div style={{ background: '#0e0e0e', color: 'var(--white)', minHeight: '100vh', display: 'flex' }}>
       
       {/* Sidebar */}
       <aside style={{ 
         width: sidebarOpen ? '220px' : '64px', 
-        borderRight: '1px solid rgba(255,255,255,0.05)',
-        background: '#080808',
+        borderRight: '1px solid rgba(255,255,255,0.08)',
+        background: 'rgba(15, 15, 15, 0.8)',
+        backdropFilter: 'blur(10px)',
         display: 'flex',
         flexDirection: 'column',
         transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -33,11 +34,11 @@ export default function AdminLayout({ children, title }: { children: React.React
       }}>
         {/* Logo Area */}
         <div style={{ padding: '1.25rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <div style={{ width: '24px', height: '24px', background: 'var(--accent-light)', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '24px', height: '24px', background: 'var(--accent-light)', borderRadius: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 15px rgba(173, 133, 106, 0.3)' }}>
             <span style={{ fontWeight: 900, color: 'var(--black)', fontSize: '0.6rem' }}>S</span>
           </div>
           {sidebarOpen && (
-            <span style={{ fontFamily: 'var(--font-d)', fontWeight: 900, letterSpacing: '0.1em', fontSize: '0.85rem' }}>SAVVY ADMIN</span>
+            <span style={{ fontFamily: 'var(--font-d)', fontWeight: 900, letterSpacing: '0.1em', fontSize: '0.85rem', color: 'var(--white)' }}>SAVVY ADMIN</span>
           )}
         </div>
 
@@ -75,9 +76,10 @@ export default function AdminLayout({ children, title }: { children: React.React
           style={{ 
             position: 'absolute', right: '-10px', top: '70px', 
             width: '20px', height: '20px', background: 'var(--accent-light)', 
-            border: 'none', borderRadius: '50%', cursor: 'pointer',
+            border: 'none', borderRadius: '2px', cursor: 'pointer', // Changed to square for engineering feel
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            zIndex: 101
+            zIndex: 101,
+            boxShadow: '0 0 10px rgba(0,0,0,0.5)'
           }}
         >
           {sidebarOpen ? <X size={10} color="var(--black)" /> : <Menu size={10} color="var(--black)" />}
@@ -85,46 +87,48 @@ export default function AdminLayout({ children, title }: { children: React.React
       </aside>
 
       {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#0e0e0e' }}>
         {/* Top Header */}
         <header style={{ 
-          height: '60px', borderBottom: '1px solid rgba(255,255,255,0.05)', 
+          height: '65px', borderBottom: '1px solid rgba(255,255,255,0.08)', 
           padding: '0 2rem', display: 'flex', alignItems: 'center', 
-          justifyContent: 'space-between', background: '#080808'
+          justifyContent: 'space-between', background: 'rgba(15, 15, 15, 0.8)',
+          backdropFilter: 'blur(10px)',
+          position: 'sticky', top: 0, zIndex: 90
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flex: 1 }}>
             {title && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <h1 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, whiteSpace: 'nowrap' }}>{title}</h1>
+                <h1 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, whiteSpace: 'nowrap', color: 'var(--white)' }}>{title}</h1>
                 <div style={{ height: '16px', width: '1px', background: 'rgba(255,255,255,0.1)' }} />
               </div>
             )}
-            <div style={{ position: 'relative', width: '320px' }}>
-              <Search size={14} style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.3 }} />
+            <div style={{ position: 'relative', width: '360px' }}>
+              <Search size={14} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.4 }} />
               <input 
                 type="text" 
                 placeholder="Search registry..." 
                 style={{ 
-                  width: '100%', background: 'rgba(255,255,255,0.02)', 
-                  border: '1px solid rgba(255,255,255,0.05)', padding: '0.5rem 1rem 0.5rem 2.5rem',
-                  fontSize: '0.75rem', color: 'var(--white)', outline: 'none', borderRadius: '4px'
+                  width: '100%', background: 'rgba(255,255,255,0.03)', 
+                  border: '1px solid rgba(255,255,255,0.08)', padding: '0.6rem 1rem 0.6rem 2.75rem',
+                  fontSize: '0.8rem', color: 'var(--white)', outline: 'none', borderRadius: '4px'
                 }} 
               />
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <button style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', position: 'relative' }}>
+            <button style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', position: 'relative', padding: '0.5rem' }}>
               <Bell size={18} />
-              <div style={{ position: 'absolute', top: '-1px', right: '-1px', width: '6px', height: '6px', background: 'var(--accent-light)', borderRadius: '50%', border: '2px solid #080808' }} />
+              <div style={{ position: 'absolute', top: '4px', right: '4px', width: '8px', height: '8px', background: 'var(--accent-light)', borderRadius: '50%', border: '2px solid #0f0f0f', boxShadow: '0 0 5px var(--accent-light)' }} />
             </button>
-            <div style={{ height: '20px', width: '1px', background: 'rgba(255,255,255,0.1)' }} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ height: '24px', width: '1px', background: 'rgba(255,255,255,0.1)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div style={{ textAlign: 'right' }}>
-                <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--white)' }}>{profile?.first_name || 'Admin'}</div>
-                <div style={{ fontSize: '0.55rem', fontWeight: 700, color: 'var(--accent-light)', letterSpacing: '0.1em' }}>MASTER ARCHITECT</div>
+                <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--white)', letterSpacing: '0.02em' }}>{profile?.first_name || 'Admin'}</div>
+                <div style={{ fontSize: '0.6rem', fontWeight: 700, color: 'var(--accent-light)', letterSpacing: '0.15em' }}>MASTER ARCHITECT</div>
               </div>
-              <div style={{ width: '32px', height: '32px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', border: '1px solid rgba(255,255,255,0.1)' }} />
+              <div style={{ width: '36px', height: '36px', background: 'rgba(255,255,255,0.05)', borderRadius: '2px', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }} />
             </div>
           </div>
         </header>

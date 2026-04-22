@@ -67,7 +67,7 @@ export default function WorkstationsClient({ slug, initialProducts }: { slug?: s
     return initialProducts.filter(p => {
       const tags = (p.tags || []).map((t: string) => t.toLowerCase());
       const name = p.name.toLowerCase();
-      const description = p.description?.toLowerCase() || '';
+      const description = p.desc?.toLowerCase() || p.shortDesc?.toLowerCase() || '';
       const s = slug.toLowerCase();
 
       // Check if slug matches any tags, name, or description
