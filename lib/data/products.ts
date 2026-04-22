@@ -113,6 +113,86 @@ export const products: Product[] = [
     stock: 8
   },
   {
+    id: 'axis-pro',
+    name: 'AXIS PRO',
+    slug: 'axis-pro',
+    series: '* Elite Series',
+    desc: 'The ultimate frame-rate machine. Hand-selected components for the competitive edge.',
+    shortDesc: 'A flagship high-performance build featuring the massive RTX 4090 for zero-compromise 4K gaming.',
+    price: 3499,
+    tag: 'Elite Series',
+    category: 'gaming',
+    featured: true,
+    specs: {
+      cpu: 'AMD Ryzen 7 7800X3D',
+      gpu: 'NVIDIA RTX 4090 24GB',
+      ram: '64GB DDR5 6000MHz',
+      storage: '4TB Samsung 990 Pro'
+    },
+    images: [],
+    stock: 2
+  },
+  {
+    id: 'orion-elite',
+    name: 'ORION ELITE',
+    slug: 'orion-elite',
+    series: '* Performance Series',
+    desc: 'Intel i7 power meets RTX 4080 Super precision.',
+    shortDesc: 'The sweet spot for high-refresh 1440p and 4K gaming in a signature stealth aesthetic.',
+    price: 2899,
+    tag: 'Performance Series',
+    category: 'gaming',
+    featured: true,
+    specs: {
+      cpu: 'Intel Core i7-14700K',
+      gpu: 'NVIDIA RTX 4080 SUPER 16GB',
+      ram: '32GB DDR5 6000MHz',
+      storage: '2TB Gen5 NVMe SSD'
+    },
+    images: [],
+    stock: 5
+  },
+  {
+    id: 'ares-mini',
+    name: 'ARES MINI',
+    slug: 'ares-mini',
+    series: '* Compact Series',
+    desc: 'Maximum density. Uncompromising small form factor power.',
+    shortDesc: 'Artisan SFF engineering that fits full-size performance into a fraction of the space.',
+    price: 2199,
+    tag: 'Compact Series',
+    category: 'gaming',
+    featured: true,
+    specs: {
+      cpu: 'Intel Core i5-14600K',
+      gpu: 'NVIDIA RTX 4070 Ti 12GB',
+      ram: '16GB DDR5 5600MHz',
+      storage: '1TB NVMe SSD'
+    },
+    images: [],
+    stock: 7
+  },
+  {
+    id: 'kronos-core',
+    name: 'KRONOS',
+    slug: 'kronos',
+    series: '* Core Series',
+    desc: 'The entry to elite performance. Tuned for the competitive standard.',
+    shortDesc: 'Exceptional 1440p performance without the premium price tag.',
+    price: 1899,
+    tag: 'Core Series',
+    category: 'gaming',
+    featured: true,
+    specs: {
+      cpu: 'AMD Ryzen 5 7600',
+      gpu: 'NVIDIA RTX 4070 SUPER 12GB',
+      ram: '32GB DDR5 5200MHz',
+      storage: '1TB Gen4 NVMe SSD'
+    },
+    images: [],
+    stock: 10
+  },
+  {
     id: 'sim-racer-o1',
     name: 'SIM-RACER ONE',
     slug: 'sim-racer-one',

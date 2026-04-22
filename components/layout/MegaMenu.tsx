@@ -1,88 +1,192 @@
-// @ts-nocheck
 'use client';
 
-import Link from "next/link";
-import { MoveRight } from "lucide-react";
-import { products } from "@/lib/data/products";
+import React from 'react';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface MegaMenuProps {
-  category: string;
-  isOpen: boolean;
+  activeType: string | null;
   onClose: () => void;
 }
 
-export default function MegaMenu({ category, isOpen, onClose }: MegaMenuProps) {
-  if (!isOpen) return null;
+const gamingMenu = [
+  {
+    category: 'BY RESOLUTION',
+    items: [
+      { name: '1080p', sub: 'Esport Ready', href: '/gaming/1080p' },
+      { name: '1440p', sub: 'The Sweet Spot', href: '/gaming/1440p' },
+      { name: '4K', sub: 'Future Proof', href: '/gaming/4k' },
+      { name: '8K', sub: 'Ultimate Fidelity', href: '/gaming/8k' },
+    ]
+  },
+  {
+    category: 'BY STYLE',
+    items: [
+      { name: 'Stealth', sub: 'Zero RGB, All Power', href: '/gaming/stealth' },
+      { name: 'RGB', sub: 'Infinite Spectrum', href: '/gaming/rgb' },
+      { name: 'Compact', sub: 'Small Form Factor', href: '/gaming/compact' },
+    ]
+  }
+];
 
-  const categoryProducts = products.filter((p: any) => p.category === category.toLowerCase().replace(' ', ''));
+const workstationMenu = [
+  {
+    category: 'BY PROFESSION',
+    items: [
+      { name: 'Content Creation', sub: 'Adobe & DaVinci Ready', href: '/workstations/content' },
+      { name: 'CAD / Engineering', sub: 'Precision Modeling', href: '/workstations/cad' },
+      { name: 'AI / Machine Learning', sub: 'GPU Accelerated Compute', href: '/workstations/ai' },
+    ]
+  },
+  {
+    category: 'BY FORM FACTOR',
+    items: [
+      { name: 'Tower', sub: 'Infinite Expandability', href: '/workstations/tower' },
+      { name: 'Compact', sub: 'SFF Workspace Hero', href: '/workstations/compact' },
+      { name: 'Rack', sub: 'Server-Grade Stability', href: '/workstations/rack' },
+    ]
+  }
+];
+
+const simMenu = [
+  {
+    category: 'SIMULATORS',
+    items: [
+      { name: 'Racing Bundles', sub: 'Pro Cockpits & Chassis', href: '/sim-rigs/racing' },
+      { name: 'Flight Systems', sub: 'Full Avionic Control', href: '/sim-rigs/flight' },
+    ]
+  }
+];
+
+export default function MegaMenu({ activeType, onClose }: MegaMenuProps) {
+  const getMenuData = () => {
+    if (activeType === 'gaming') return gamingMenu;
+    if (activeType === 'workstation') return workstationMenu;
+    if (activeType === 'sim') return simMenu;
+    return [];
+  };
+
+  const data = getMenuData();
 
   return (
-    <div 
-      onMouseLeave={onClose}
-      style={{
-        position: 'absolute',
-        top: '100%',
-        left: 0,
-        width: '100vw',
-        background: 'var(--white)',
-        borderBottom: 'var(--border-heavy)',
-        zIndex: 90,
-        padding: '3rem 0',
-        animation: 'slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
-      }}
-    >
-      <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '4rem' }}>
-        <div>
-          <h3 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.8rem', textTransform: 'uppercase', lineHeight: 1, marginBottom: '1rem' }}>
-            {category}
-          </h3>
-          <p style={{ fontSize: '0.82rem', lineHeight: 1.6, color: 'var(--zinc-500)', marginBottom: '2rem' }}>
-            Precision-engineered systems for {category.toLowerCase()}. Handcrafted in Sydney with a 2-year build warranty.
-          </p>
-          <Link 
-            href="/shop" 
+    <AnimatePresence>
+      {activeType && data.length > 0 && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={onClose}
-            className="section-link"
-            style={{ color: 'var(--black)', fontSize: '0.75rem', fontWeight: 800, borderBottom: '2px solid var(--black)', paddingBottom: '4px' }}
-          >
-            View All {category} <MoveRight size={14} style={{ marginLeft: '4px' }} />
-          </Link>
-        </div>
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)', zIndex: 90 }}
+          />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-          {categoryProducts.map((product: any) => (
-            <Link 
-              key={product.id}
-              href={`/product/${product.slug}`}
-              onClick={onClose}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem', textDecoration: 'none', color: 'inherit' }}
-            >
-              <div style={{ aspectHeight: '4/3', background: 'var(--zinc-100)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-                <svg width="40" height="50" viewBox="0 0 70 88" fill="none" style={{ opacity: 0.15 }}>
-                  <rect x="5" y="5" width="60" height="78" rx="2" stroke="#000" strokeWidth="3"/>
-                </svg>
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.1rem', textTransform: 'uppercase' }}>{product.name}</div>
-                <div style={{ fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--zinc-400)', marginTop: '0.2rem' }}>
-                  {product.tag}
+          <motion.div
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              width: '100%',
+              background: '#0a0a0a',
+              borderBottom: '1px solid rgba(173, 133, 106, 0.2)',
+              zIndex: 100,
+            }}
+          >
+            <div className="wrap" style={{ padding: '3rem 0 4rem 0', display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
+              {data.map((section, sIdx) => (
+                <div key={section.category}>
+                  {/* Category Header - Bigger & More Visible */}
+                  <div style={{ 
+                    fontFamily: 'var(--font-d)', 
+                    fontWeight: 900, 
+                    fontSize: '1rem', 
+                    letterSpacing: '0.3em', 
+                    color: '#ad856a', 
+                    marginBottom: '2rem',
+                    textTransform: 'uppercase', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '1.5rem'
+                  }}>
+                    {section.category}
+                    <div style={{ flex: 1, height: '1px', background: 'rgba(173, 133, 106, 0.15)' }} />
+                  </div>
+
+                  {/* Items Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', width: '100%' }}>
+                    {section.items.map((item, iIdx) => (
+                      <Link 
+                        key={item.name} 
+                        href={item.href} 
+                        onClick={onClose}
+                        className="nav-text-card"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: (sIdx * 0.1) + (iIdx * 0.05) }}
+                          className="nav-card-inner"
+                          style={{ 
+                            padding: '1.75rem 1.5rem', 
+                            background: 'rgba(255,255,255,0.01)', 
+                            border: '1px solid rgba(255,255,255,0.03)',
+                            borderRadius: '2px',
+                            transition: 'all 0.4s ease',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.4rem',
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                        >
+                          <div className="nav-card-name" style={{ 
+                            fontFamily: 'var(--font-d)', 
+                            fontWeight: 900, 
+                            fontSize: '1.2rem', 
+                            color: 'var(--white)', 
+                            letterSpacing: '0.04em', 
+                            textTransform: 'uppercase',
+                            transition: 'color 0.3s ease'
+                          }}>
+                            {item.name}
+                          </div>
+                          <div className="nav-card-sub" style={{ 
+                            fontSize: '0.65rem', 
+                            fontWeight: 800, 
+                            color: 'var(--text-dim)', 
+                            letterSpacing: '0.1em', 
+                            textTransform: 'uppercase',
+                            transition: 'color 0.3s ease'
+                          }}>
+                            {item.sub}
+                          </div>
+                        </motion.div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-          {categoryProducts.length === 0 && (
-            <div style={{ gridColumn: 'span 3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--zinc-400)', fontFamily: 'var(--font-d)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.1em' }}>
-              Coming Soon — Signature Series
+              ))}
             </div>
-          )}
-        </div>
-      </div>
-      <style jsx>{`
-        @keyframes slideDown {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
+          </motion.div>
+        </>
+      )}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .nav-text-card:hover .nav-card-inner {
+          background: rgba(173, 133, 106, 0.05) !important;
+          border-color: rgba(173, 133, 106, 0.3) !important;
+          transform: translateY(-4px);
         }
-      `}</style>
-    </div>
+        .nav-text-card:hover .nav-card-name {
+          color: #ad856a !important;
+        }
+        .nav-text-card:hover .nav-card-sub {
+          color: var(--white) !important;
+        }
+      `}} />
+    </AnimatePresence>
   );
 }

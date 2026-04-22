@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use client';
 
 import React from 'react';
@@ -7,7 +6,7 @@ export default function Gallery() {
   return (
     <section className="gallery" style={{ background: 'var(--bg)', padding: '8rem 0', borderBottom: '1px solid var(--border)' }}>
       <div className="wrap">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '5rem', flexWrap: 'wrap', gap: '1.5rem' }}>
           <h2 style={{ 
             fontFamily: 'var(--font-d)', 
             fontWeight: 900, 
@@ -22,14 +21,9 @@ export default function Gallery() {
           <div style={{ fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: 'var(--fs-xs)', letterSpacing: '0.15em', color: 'var(--text-muted)' }}>VIEW ALL BUILDS →</div>
         </div>
 
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(4, 1fr)', 
-          gridAutoRows: '280px',
-          gap: '1.5rem' 
-        }}>
+        <div className="gallery-grid">
           {/* Main Large Shot */}
-          <div style={{ gridColumn: '1 / 3', gridRow: '1 / 3', background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
+          <div className="g-cell" style={{ background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
              <img 
               src="https://images.unsplash.com/photo-1541140134513-85a161dc4a00?q=80&w=2000&auto=format&fit=crop" 
               alt="Gallery 1" 
@@ -37,7 +31,7 @@ export default function Gallery() {
             />
           </div>
           {/* Top Right Shot */}
-          <div style={{ gridColumn: '3 / 4', gridRow: '1 / 2', background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
+          <div style={{ background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
              <img 
               src="https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=1000&auto=format&fit=crop" 
               alt="Gallery 2" 
@@ -45,7 +39,7 @@ export default function Gallery() {
             />
           </div>
           {/* Top Far Right Shot */}
-          <div style={{ gridColumn: '4 / 5', gridRow: '1 / 2', background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
+          <div style={{ background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
              <img 
               src="https://images.unsplash.com/photo-1587202372471-802996e897c7?q=80&w=1000&auto=format&fit=crop" 
               alt="Gallery 3" 
@@ -53,7 +47,7 @@ export default function Gallery() {
             />
           </div>
           {/* Bottom Right Shot */}
-          <div style={{ gridColumn: '3 / 5', gridRow: '2 / 3', background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)' }}>
+          <div style={{ background: '#0a0a0a', overflow: 'hidden', border: '1px solid var(--border)', gridColumn: 'span 2' }} className="hide-mobile">
              <img 
               src="https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=2000&auto=format&fit=crop" 
               alt="Gallery 4" 

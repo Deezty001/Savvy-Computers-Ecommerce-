@@ -5,7 +5,7 @@
   --text-muted: #b0b0b0;
   --text-dim: #808080;
   --accent: #3d342d; 
-  --accent-light: #d1b09b;
+  --accent-light: #ad856a;
   --accent-bronze: #8b5a2b; 
   --border: rgba(255, 255, 255, 0.08);
   --border-light: rgba(255, 255, 255, 0.04);
@@ -22,18 +22,41 @@
   --fs-base: 1.25rem;
   --fs-lg: 1.6rem;
   --fs-xl: 2.2rem;
-  --fs-2xl: clamp(3.5rem, 8vw, 5.5rem);
-  --fs-hero: clamp(5rem, 15vw, 13rem);
+  --fs-2xl: clamp(2rem, 5vw, 3rem);
+  --fs-hero: clamp(3rem, 8vw, 6rem);
   
-  --header-h: 84px;
+  --section-padding: 8rem;
+  --header-h: 70px;
+  
+  /* Responsive Tokens */
+  --wrap-px: 4rem;
+  --grid-gap: 1.5rem;
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --section-padding: 6rem;
+    --wrap-px: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 4rem;
+    --wrap-px: 1.5rem;
+    --fs-hero: clamp(2.5rem, 10vw, 4rem);
+    --fs-2xl: 2.2rem;
+    --fs-xl: 1.8rem;
+  }
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--text); font-family: var(--font-b); overflow-x: hidden; }
 img { display: block; max-width: 100%; }
-a { text-decoration: none; color: inherit; }
-ul { list-style: none; }
+a, button, [role="button"], .btn, .nav-link-btn, .filter-link, .sidebar-opt, .nav-text-card { 
+  cursor: pointer; 
+}
 
 body::before {
   content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
@@ -42,7 +65,33 @@ body::before {
 }
 
 ::selection { background: var(--text); color: var(--bg); }
-.wrap { max-width: 1440px; margin: 0 auto; padding: 0 4rem; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--wrap-px); width: 100%; }
+
+/* Responsive Grid Utilities */
+.res-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
+.res-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--grid-gap); }
+.res-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--grid-gap); }
+
+@media (max-width: 1024px) {
+  .res-grid-3, .res-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+.res-grid-hero { grid-template-columns: 1.4fr 1fr; gap: 8rem; }
+
+@media (max-width: 1200px) {
+  .res-grid-hero { gap: 4rem; }
+}
+
+@media (max-width: 1024px) {
+  .res-grid-hero { grid-template-columns: 1fr; gap: 4rem; text-align: center; }
+  .res-grid-hero > div:first-child { order: 2; }
+  .res-grid-hero > div:last-child { order: 1; max-width: 600px; margin: 0 auto; width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .res-grid-2, .res-grid-3, .res-grid-4 { grid-template-columns: 1fr; gap: 2rem; }
+  .res-grid-hero { gap: 3rem; }
+}
 
 @media (max-width: 768px) {
   .wrap { padding: 0 1.5rem; }
@@ -109,6 +158,15 @@ body::before {
 .hover-white:hover { color: var(--white) !important; }
 .hover-black:hover, .hover-black.active { color: var(--black) !important; }
 
+@media (max-width: 1024px) {
+  .hide-tablet { display: none !important; }
+  .show-tablet { display: flex !important; }
+}
+
+@media (min-width: 1025px) {
+  .show-tablet { display: none !important; }
+}
+
 @media (max-width: 768px) {
   .hide-mobile { display: none !important; }
   .show-mobile { display: flex !important; }
@@ -116,4 +174,26 @@ body::before {
 
 @media (min-width: 769px) {
   .show-mobile { display: none !important; }
+}
+
+/* Product Card Hover States */
+.product-card:hover { border-color: rgba(255,255,255,0.25) !important; }
+.product-card:hover .product-img { transform: scale(1.05); opacity: 0.3 !important; }
+.product-card:hover .specs-overlay { opacity: 1 !important; transform: translateY(0) !important; }
+
+.res-grid-showcase { grid-template-columns: 1.1fr 1fr; gap: 6rem; }
+
+@media (max-width: 1024px) {
+  .res-grid-showcase { grid-template-columns: 1fr; gap: 4rem; }
+}
+
+@media (max-width: 768px) {
+  .res-grid-showcase { gap: 3rem; }
+}
+
+.res-grid-product { grid-template-columns: 1.1fr 1fr; gap: 5rem; }
+
+@media (max-width: 1024px) {
+  .res-grid-product { grid-template-columns: 1fr; gap: 3rem; }
+  .res-grid-product > div:first-child { max-width: 600px; margin: 0 auto; width: 100%; }
 }

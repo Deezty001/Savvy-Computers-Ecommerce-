@@ -7,6 +7,7 @@ import { AuthProvider } from "@/lib/auth/AuthContext";
 import { CartProvider } from "@/lib/cart/CartContext";
 import MiniCart from "@/components/cart/MiniCart";
 import AnnouncementBar from "@/components/layout/AnnouncementBar";
+import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const barlow = Barlow({
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: any;
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className="scroll-smooth">
@@ -52,6 +53,7 @@ export default function RootLayout({
           <CartProvider>
             <div className="flex min-h-screen flex-col">
               <AnnouncementBar />
+              <Header />
               <div className="flex-1">
                 {children}
               </div>

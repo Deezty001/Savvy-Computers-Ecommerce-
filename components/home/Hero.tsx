@@ -1,14 +1,36 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { MoveRight } from "lucide-react";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { products as staticProducts } from "@/lib/data/products";
 
 export default function Hero() {
   const container = useRef<HTMLDivElement>(null);
   const headline = useRef<HTMLHeadingElement>(null);
+  const [featuredProduct, setFeaturedProduct] = useState<any>(null);
+
+  useEffect(() => {
+    async function fetchFeatured() {
+      if (isSupabaseConfigured) {
+        const { data } = await supabase
+          .from('products')
+          .select('*')
+          .eq('is_featured', true)
+          .limit(1)
+          .single();
+        
+        if (data) setFeaturedProduct(data);
+      } else {
+        // Fallback to first featured static product
+        setFeaturedProduct(staticProducts.find(p => p.featured));
+      }
+    }
+    fetchFeatured();
+  }, []);
 
   useGSAP(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -18,9 +40,9 @@ export default function Hero() {
   }, { scope: container });
 
   return (
-    <section ref={container} className="hero" style={{ background: 'var(--bg)', paddingTop: '8rem', paddingBottom: '10rem' }}>
+    <section ref={container} className="hero" style={{ background: 'var(--bg)', padding: 'var(--section-padding) 0' }}>
       <div className="wrap">
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '8rem', alignItems: 'center' }}>
+        <div className="res-grid-hero" style={{ display: 'grid', alignItems: 'center' }}>
           <div>
             <div style={{
               fontFamily: 'var(--font-d)',
@@ -50,10 +72,10 @@ export default function Hero() {
             </h1>
 
             <div style={{ display: 'flex', gap: '1.5rem' }}>
-              <Link href="/shop" className="btn btn-solid hero-btn" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.75rem' }}>
-                BUILD YOUR CUSTOM RIG <MoveRight size={18} />
+              <Link href={featuredProduct ? `/systems/${featuredProduct.slug}` : "/collection"} className="btn btn-solid hero-btn" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.75rem' }}>
+                {featuredProduct ? `DISCOVER ${featuredProduct.name}` : "BUILD YOUR CUSTOM RIG"} <MoveRight size={18} />
               </Link>
-              <Link href="/shop" className="btn btn-ghost hero-btn" style={{ textDecoration: 'none' }}>
+              <Link href="/collection" className="btn btn-ghost hero-btn" style={{ textDecoration: 'none' }}>
                 READY TO SHIP
               </Link>
             </div>
@@ -69,8 +91,8 @@ export default function Hero() {
           }}>
             <div style={{ position: 'absolute', inset: 0, background: 'var(--accent)', opacity: 0.15, mixBlendMode: 'overlay', zIndex: 1 }} />
             <img
-              src="https://images.unsplash.com/photo-1587202372471-802996e897c7?q=80&w=2000&auto=format&fit=crop"
-              alt="Elite PC Station"
+              src={featuredProduct?.images[0] || "https://images.unsplash.com/photo-1587202372471-802996e897c7?q=80&w=2000&auto=format&fit=crop"}
+              alt={featuredProduct?.name || "Elite PC Station"}
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9, filter: 'contrast(1.1) brightness(0.85) sepia(0.18)' }}
             />
           </div>

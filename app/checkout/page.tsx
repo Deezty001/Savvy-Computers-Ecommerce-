@@ -1,12 +1,12 @@
+// @ts-nocheck
 'use client';
 
 import * as React from 'react';
 import { useState } from 'react';
 import type { CartItem } from '@/lib/cart/CartContext';
 import Link from 'next/link';
-import { MoveRight, ChevronLeft, CreditCard, Truck, ShieldCheck, Lock, CheckCircle2 } from 'lucide-react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MoveRight, ChevronLeft, CreditCard, Truck, ShieldCheck, Lock, CheckCircle2, Info } from 'lucide-react';
 import { useCart } from '@/lib/cart/CartContext';
 
 export default function CheckoutPage() {
@@ -37,216 +37,243 @@ export default function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <main style={{ background: 'var(--white)', minHeight: '100vh' }}>
-        <Header />
-        <div className="wrap" style={{ padding: '8rem 0', textAlign: 'center' }}>
-          <h1 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '3rem', textTransform: 'uppercase', marginBottom: '1.5rem' }}>Checkout Unavailable</h1>
-          <p style={{ color: 'var(--zinc-500)', marginBottom: '3rem' }}>Your cart is empty. Add a system to proceed.</p>
-          <Link href="/shop" className="btn btn-solid">Return to Shop</Link>
+      <main style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="wrap" style={{ textAlign: 'center' }}>
+          <h1 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '3rem', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+            REGISTRY <span className="text-outline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)', color: 'transparent' }}>UNAVAILABLE</span>
+          </h1>
+          <p style={{ color: 'var(--text-dim)', marginBottom: '3rem' }}>Your cart is empty. Add a precision system to proceed.</p>
+          <Link href="/shop" className="btn btn-solid">RETURN TO SHOP</Link>
         </div>
       </main>
     );
   }
 
   return (
-    <main style={{ background: 'var(--white)', minHeight: '100vh' }}>
-      <Header />
+    <main style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh', paddingTop: '100px' }}>
       
-      <div className="wrap" style={{ padding: '4rem 0 10rem' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 420px', gap: '6rem' }} className="checkout-grid">
+      <div className="wrap" style={{ padding: '6rem 0 10rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 420px', gap: '8rem' }} className="checkout-grid">
           
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {/* Step Indicator */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '4rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', marginBottom: '5rem' }}>
               {[1, 2, 3].map(i => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <div style={{ 
-                    width: '32px', height: '32px', borderRadius: '50%', border: '2px solid var(--black)',
+                    width: '36px', height: '36px', borderRadius: '50%', 
+                    border: step >= i ? '1px solid #ad856a' : '1px solid var(--border)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: step >= i ? 'var(--black)' : 'transparent',
-                    color: step >= i ? 'var(--white)' : 'var(--black)',
-                    fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '0.8rem'
+                    background: step >= i ? 'rgba(173, 133, 106, 0.1)' : 'transparent',
+                    color: step >= i ? '#ad856a' : 'var(--text-dim)',
+                    fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '0.85rem',
+                    transition: 'all 0.3s ease'
                   }}>
-                    {step > i ? <CheckCircle2 size={16} /> : i}
+                    {step > i ? <CheckCircle2 size={18} /> : `0${i}`}
                   </div>
                   <span style={{ 
-                    fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.65rem', 
-                    letterSpacing: '0.12em', textTransform: 'uppercase',
-                    color: step >= i ? 'var(--black)' : 'var(--zinc-300)'
+                    fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.7rem', 
+                    letterSpacing: '0.25em', textTransform: 'uppercase',
+                    color: step >= i ? 'var(--white)' : 'var(--text-dim)',
+                    transition: 'all 0.3s ease'
                   }}>
-                    {i === 1 ? 'Shipping' : i === 2 ? 'Payment' : 'Review'}
+                    {i === 1 ? 'LOGISTICS' : i === 2 ? 'PAYMENT' : 'CONFIRM'}
                   </span>
-                  {i < 3 && <div style={{ width: '40px', height: '2px', background: 'var(--zinc-100)' }} />}
+                  {i < 3 && <div style={{ width: '40px', height: '1px', background: 'var(--border)' }} />}
                 </div>
               ))}
             </div>
 
             {/* Current Step Content */}
-            <div key={step} style={{ animation: 'fadeIn 0.4s ease' }}>
-              {step === 1 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                  <h2 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase' }}>Shipping Details</h2>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                    <div style={{ gridColumn: 'span 2' }}>
-                      <label style={labelStyle}>Email Address</label>
-                      <input type="email" name="email" value={formData.email} onChange={handleInputChange} style={inputStyle} placeholder="you@example.com" />
-                    </div>
-                    <div>
-                      <label style={labelStyle}>First Name</label>
-                      <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} style={inputStyle} />
-                    </div>
-                    <div>
-                      <label style={labelStyle}>Last Name</label>
-                      <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} style={inputStyle} />
-                    </div>
-                    <div style={{ gridColumn: 'span 2' }}>
-                      <label style={labelStyle}>Residential Address</label>
-                      <input type="text" name="address" value={formData.address} onChange={handleInputChange} style={inputStyle} />
-                    </div>
-                    <div>
-                      <label style={labelStyle}>City</label>
-                      <input type="text" name="city" value={formData.city} onChange={handleInputChange} style={inputStyle} />
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                      <div>
-                        <label style={labelStyle}>State</label>
-                        <input type="text" name="state" value={formData.state} onChange={handleInputChange} style={inputStyle} placeholder="NSW" />
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={step}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+              >
+                {step === 1 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                    <h2 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      SHIPPING <span className="text-outline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)', color: 'transparent' }}>DETAILS</span>
+                    </h2>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                      <div style={{ gridColumn: 'span 2' }}>
+                        <label style={labelStyle}>EMAIL ADDRESS</label>
+                        <input type="email" name="email" value={formData.email} onChange={handleInputChange} style={inputStyle} placeholder="arch@savvy.com" />
                       </div>
                       <div>
-                        <label style={labelStyle}>Postcode</label>
-                        <input type="text" name="postcode" value={formData.postcode} onChange={handleInputChange} style={inputStyle} />
-                      </div>
-                    </div>
-                  </div>
-                  <button onClick={handleNextStep} className="btn btn-solid" style={{ marginTop: '2rem', padding: '1.25rem', justifyContent: 'center' }}>
-                    Continue to Payment <MoveRight size={18} />
-                  </button>
-                </div>
-              )}
-
-              {step === 2 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                  <h2 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase' }}>Secure Payment</h2>
-                  <div style={{ padding: '2rem', background: 'var(--zinc-100)', border: 'var(--border-light)', display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
-                    <div style={{ padding: '0.8rem', background: 'var(--white)', borderRadius: '4px' }}>
-                      <CreditCard size={24} strokeWidth={1.5} />
-                    </div>
-                    <div>
-                      <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase' }}>Stripe Secure Checkout</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--zinc-500)', marginTop: '0.2rem' }}>Encrypted & PCI Compliant Payment Processing</div>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div>
-                      <label style={labelStyle}>Name on Card</label>
-                      <input type="text" name="cardName" value={formData.cardName} onChange={handleInputChange} style={inputStyle} />
-                    </div>
-                    <div>
-                      <label style={labelStyle}>Card Number</label>
-                      <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleInputChange} style={inputStyle} placeholder="0000 0000 0000 0000" />
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                      <div>
-                        <label style={labelStyle}>Expiry (MM/YY)</label>
-                        <input type="text" name="expiry" value={formData.expiry} onChange={handleInputChange} style={inputStyle} />
+                        <label style={labelStyle}>FIRST NAME</label>
+                        <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} style={inputStyle} />
                       </div>
                       <div>
-                        <label style={labelStyle}>CVC</label>
-                        <input type="text" name="cvc" value={formData.cvc} onChange={handleInputChange} style={inputStyle} />
+                        <label style={labelStyle}>LAST NAME</label>
+                        <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} style={inputStyle} />
+                      </div>
+                      <div style={{ gridColumn: 'span 2' }}>
+                        <label style={labelStyle}>RESIDENTIAL ADDRESS</label>
+                        <input type="text" name="address" value={formData.address} onChange={handleInputChange} style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>CITY / SUBURB</label>
+                        <input type="text" name="city" value={formData.city} onChange={handleInputChange} style={inputStyle} />
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                        <div>
+                          <label style={labelStyle}>STATE</label>
+                          <input type="text" name="state" value={formData.state} onChange={handleInputChange} style={inputStyle} placeholder="NSW" />
+                        </div>
+                        <div>
+                          <label style={labelStyle}>POSTCODE</label>
+                          <input type="text" name="postcode" value={formData.postcode} onChange={handleInputChange} style={inputStyle} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem' }}>
-                    <button onClick={handlePrevStep} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--zinc-400)' }}>Back</button>
-                    <button onClick={handleNextStep} className="btn btn-solid" style={{ flex: 1, padding: '1.25rem', justifyContent: 'center' }}>
-                      Review Order <MoveRight size={18} />
+                    <button onClick={handleNextStep} className="btn btn-solid" style={{ marginTop: '2rem', padding: '1.5rem', justifyContent: 'center' }}>
+                      CONTINUE TO PAYMENT <MoveRight size={20} />
                     </button>
                   </div>
-                </div>
-              )}
+                )}
 
-              {step === 3 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                  <h2 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase' }}>Final Review</h2>
-                  <div style={{ padding: '2rem', border: 'var(--border-light)', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div>
-                      <div style={labelStyle}>Shipping to</div>
-                      <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.9rem', color: 'var(--black)' }}>
-                        {formData.firstName} {formData.lastName}<br/>
-                        {formData.address}, {formData.city}, {formData.state} {formData.postcode}
+                {step === 2 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                    <h2 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      SECURE <span className="text-outline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)', color: 'transparent' }}>PAYMENT</span>
+                    </h2>
+                    <div style={{ padding: '2.5rem', background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: '2rem', marginBottom: '1rem' }}>
+                      <div style={{ padding: '1rem', background: 'rgba(173, 133, 106, 0.1)', borderRadius: '4px' }}>
+                        <Lock size={28} color="#ad856a" strokeWidth={1.5} />
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>STRIPE SECURE GATEWAY</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', marginTop: '0.3rem', lineHeight: 1.5 }}>Encrypted, PCI-DSS compliant processing for high-value transactions.</div>
                       </div>
                     </div>
-                    <div>
-                      <div style={labelStyle}>Payment Method</div>
-                      <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.9rem', color: 'var(--black)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <CreditCard size={16} /> Visa ending in {formData.cardNumber.slice(-4) || '4242'}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                      <div>
+                        <label style={labelStyle}>NAME ON CARD</label>
+                        <input type="text" name="cardName" value={formData.cardName} onChange={handleInputChange} style={inputStyle} />
+                      </div>
+                      <div>
+                        <label style={labelStyle}>CARD NUMBER</label>
+                        <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleInputChange} style={inputStyle} placeholder="**** **** **** ****" />
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                        <div>
+                          <label style={labelStyle}>EXPIRY (MM/YY)</label>
+                          <input type="text" name="expiry" value={formData.expiry} onChange={handleInputChange} style={inputStyle} placeholder="01/29" />
+                        </div>
+                        <div>
+                          <label style={labelStyle}>CVC</label>
+                          <input type="text" name="cvc" value={formData.cvc} onChange={handleInputChange} style={inputStyle} placeholder="***" />
+                        </div>
                       </div>
                     </div>
+                    <div style={{ display: 'flex', gap: '2rem', marginTop: '2rem', alignItems: 'center' }}>
+                      <button onClick={handlePrevStep} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-dim)', letterSpacing: '0.15em' }}>BACK</button>
+                      <button onClick={handleNextStep} className="btn btn-solid" style={{ flex: 1, padding: '1.5rem', justifyContent: 'center' }}>
+                        REVIEW ORDER <MoveRight size={20} />
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem' }}>
-                    <button onClick={handlePrevStep} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.65rem', textTransform: 'uppercase', color: 'var(--zinc-400)' }}>Back</button>
-                    <Link 
-                      href="/order-confirmation" 
-                      onClick={() => clearCart()}
-                      className="btn btn-solid" 
-                      style={{ flex: 1, padding: '1.25rem', justifyContent: 'center', textDecoration: 'none' }}
-                    >
-                      Process Payment — ${total.toLocaleString()} <MoveRight size={18} />
-                    </Link>
+                )}
+
+                {step === 3 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                    <h2 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      FINAL <span className="text-outline" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.4)', color: 'transparent' }}>REVIEW</span>
+                    </h2>
+                    <div style={{ padding: '3rem', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.01)', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                        <div>
+                          <div style={labelStyle}>DELIVERY DESTINATION</div>
+                          <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '1rem', color: 'var(--white)', lineHeight: 1.6 }}>
+                            {formData.firstName} {formData.lastName}<br/>
+                            {formData.address}, {formData.city}<br/>
+                            {formData.state} {formData.postcode}
+                          </div>
+                        </div>
+                        <div>
+                          <div style={labelStyle}>PAYMENT METHOD</div>
+                          <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '1rem', color: 'var(--white)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <CreditCard size={18} color="#ad856a" /> Visa Card Ending {formData.cardNumber.slice(-4) || '4242'}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div style={{ padding: '1.5rem', border: '1px solid rgba(173, 133, 106, 0.2)', background: 'rgba(173, 133, 106, 0.05)', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <Info size={16} color="#ad856a" />
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', lineHeight: 1.5 }}>By processing, you agree to Savvy's Bespoke Build Terms & Warranty policies.</div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '2rem', marginTop: '2rem', alignItems: 'center' }}>
+                      <button onClick={handlePrevStep} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--text-dim)', letterSpacing: '0.15em' }}>BACK</button>
+                      <Link 
+                        href="/order-confirmation" 
+                        onClick={() => clearCart()}
+                        className="btn btn-solid" 
+                        style={{ flex: 1, padding: '1.5rem', justifyContent: 'center', textDecoration: 'none' }}
+                      >
+                        PROCESS PAYMENT — ${total.toLocaleString()} <MoveRight size={20} />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Sidebar Sidebar */}
-          <div style={{ position: 'sticky', top: '100px', height: 'fit-content' }}>
-            <div style={{ border: 'var(--border-heavy)', padding: '2.5rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2rem' }}>
-                <h3 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.25rem', textTransform: 'uppercase' }}>Summary</h3>
-                <Link href="/cart" style={{ fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.6rem', color: 'var(--zinc-400)', textTransform: 'uppercase' }}>Edit Cart</Link>
+          {/* Sidebar Summary */}
+          <div style={{ position: 'sticky', top: '120px', height: 'fit-content' }}>
+            <div style={{ border: '1px solid var(--border)', padding: '3rem', background: 'rgba(255,255,255,0.01)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2.5rem' }}>
+                <h3 style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.2rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>REGISTRY</h3>
+                <Link href="/cart" style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.65rem', color: 'var(--accent-light)', textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none' }}>EDIT</Link>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3rem' }}>
                 {cart.map((item: CartItem) => (
-                  <div key={item.id} style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <div style={{ width: '50px', height: '50px', background: 'var(--zinc-100)', position: 'relative', flexShrink: 0 }}>
-                      <div style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'var(--black)', color: 'var(--white)', width: '18px', height: '18px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.6rem', fontWeight: 900 }}>{item.quantity}</div>
+                  <div key={item.id} style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+                    <div style={{ width: '60px', height: '60px', background: 'var(--bg-offset)', border: '1px solid var(--border)', position: 'relative', flexShrink: 0 }}>
+                      <img src={item.image} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1)' }} />
+                      <div style={{ position: 'absolute', top: '-8px', right: '-8px', background: '#ad856a', color: 'var(--black)', width: '20px', height: '20px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 900 }}>{item.quantity}</div>
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', lineHeight: 1 }}>{item.name}</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--zinc-400)', marginTop: '0.1rem' }}>Pre-Dispatch QC Passed</div>
+                      <div style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '0.9rem', textTransform: 'uppercase', lineHeight: 1.1, color: 'var(--white)' }}>{item.name}</div>
+                      <div style={{ fontSize: '0.65rem', color: 'var(--text-dim)', marginTop: '0.3rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Pre-Dispatch QC Passed</div>
                     </div>
-                    <div style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.9rem' }}>${(item.price * item.quantity).toLocaleString()}</div>
+                    <div style={{ fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.1rem' }}>${(item.price * item.quantity).toLocaleString()}</div>
                   </div>
                 ))}
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: 'var(--border-light)', paddingTop: '2rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>
-                  <span style={{ color: 'var(--zinc-500)' }}>Subtotal</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid var(--border)', paddingTop: '2.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  <span style={{ color: 'var(--text-dim)' }}>SUBTOTAL</span>
                   <span>${subtotal.toLocaleString()}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>
-                  <span style={{ color: 'var(--zinc-500)' }}>Shipping — Express</span>
-                  <span style={{ color: '#166534' }}>Free</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                  <span style={{ color: 'var(--text-dim)' }}>INSURED SHIPPING</span>
+                  <span style={{ color: 'var(--accent-light)' }}>FREE</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '1.8rem', marginTop: '1rem' }}>
-                  <span>Total</span>
-                  <span>${total.toLocaleString()}</span>
-                </div>
-                <div style={{ fontFamily: 'var(--font-d)', fontWeight: 700, fontSize: '0.62rem', color: 'var(--zinc-400)', textTransform: 'uppercase', textAlign: 'right' }}>
-                  Includes ${(total * (1/11)).toLocaleString()} GST (10%)
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--font-d)', fontWeight: 900, fontSize: '2rem', marginTop: '1.5rem', alignItems: 'baseline' }}>
+                  <span>TOTAL</span>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ lineHeight: 1 }}>${total.toLocaleString()}</div>
+                    <div style={{ fontSize: '0.6rem', color: 'var(--text-dim)', letterSpacing: '0.1em', marginTop: '0.5rem' }}>INC. GST</div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.75rem', color: 'var(--zinc-500)' }}>
-                <Lock size={14} /> Encrypted, secure checkout
+            <div style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.7rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>
+                <Lock size={16} color="var(--accent-light)" /> Encrypted, secure checkout
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.75rem', color: 'var(--zinc-500)' }}>
-                <ShieldCheck size={14} /> Fully insured shipping
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.7rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>
+                <ShieldCheck size={16} color="var(--accent-light)" /> Fully insured, global shipping
               </div>
             </div>
           </div>
@@ -254,7 +281,11 @@ export default function CheckoutPage() {
         </div>
       </div>
 
-      <Footer />
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          .checkout-grid { grid-template-columns: 1fr !important; gap: 6rem !important; }
+        }
+      `}</style>
     </main>
   );
 }
@@ -262,21 +293,23 @@ export default function CheckoutPage() {
 const labelStyle: React.CSSProperties = {
   display: 'block',
   fontFamily: 'var(--font-d)',
-  fontWeight: 700,
-  fontSize: '0.62rem',
-  letterSpacing: '0.12em',
+  fontWeight: 800,
+  fontSize: '0.65rem',
+  letterSpacing: '0.2em',
   textTransform: 'uppercase',
-  color: 'var(--zinc-400)',
-  marginBottom: '0.5rem'
+  color: 'var(--text-dim)',
+  marginBottom: '0.75rem'
 };
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
-  padding: '1rem',
-  border: 'var(--border-light)',
+  padding: '1.25rem',
+  border: '1px solid var(--border)',
   fontFamily: 'var(--font-b)',
   fontSize: '0.9rem',
-  background: 'var(--white)',
+  background: 'rgba(255,255,255,0.02)',
+  color: 'var(--white)',
   outline: 'none',
-  transition: 'border-color 0.15s'
+  transition: 'all 0.3s ease',
+  borderRadius: '2px'
 };
