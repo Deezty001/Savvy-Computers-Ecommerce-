@@ -129,35 +129,80 @@ export default function Header() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             style={{
-              position: 'fixed', inset: 0, background: 'var(--bg)', zIndex: 105,
-              padding: '8rem 2rem 4rem', display: 'flex', flexDirection: 'column', gap: '3rem'
+              position: 'fixed', 
+              top: 0, 
+              right: 0, 
+              bottom: 0, 
+              left: 0,
+              background: '#0a0a0a', // Use absolute black for total coverage
+              zIndex: 1000, // Very high z-index
+              padding: '8rem 2rem 4rem', 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '4rem',
+              overflowY: 'auto'
             }}
           >
+            {/* Close button inside drawer for redundant safety */}
+            <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem' }}>
+               <button 
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{ background: 'none', border: 'none', color: 'var(--white)', cursor: 'pointer', padding: '1rem' }}
+              >
+                <X size={32} />
+              </button>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              <div style={{ color: 'var(--accent-light)', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.4em', marginBottom: '-1rem' }}>MENU</div>
               {navLinks.map((link) => (
                 <Link 
                   key={link.type} 
                   href={link.href} 
                   onClick={() => setIsMobileMenuOpen(false)}
-                  style={{ fontFamily: 'var(--font-d)', fontSize: '2.5rem', fontWeight: 900, color: 'var(--white)', textDecoration: 'none', letterSpacing: '0.05em' }}
+                  style={{ 
+                    fontFamily: 'var(--font-d)', 
+                    fontSize: '3.5rem', 
+                    fontWeight: 900, 
+                    color: 'var(--white)', 
+                    textDecoration: 'none', 
+                    lineHeight: 0.9,
+                    textTransform: 'uppercase'
+                  }}
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
             
-            <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '2rem' }}>
+            <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3rem' }}>
                <Link 
                 href={!isAuthenticated ? "/account/login" : isAdmin ? "/admin" : "/account"} 
                 onClick={() => setIsMobileMenuOpen(false)}
-                style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '1.25rem', letterSpacing: '0.15em', color: 'var(--white)', textDecoration: 'none', display: 'block', marginBottom: '2rem' }} 
+                style={{ 
+                  fontFamily: 'var(--font-d)', 
+                  fontWeight: 900, 
+                  fontSize: '1.5rem', 
+                  letterSpacing: '0.1em', 
+                  color: 'var(--white)', 
+                  textDecoration: 'none', 
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }} 
               >
-                {!isAuthenticated ? "LOGIN / REGISTER" : "MY ACCOUNT"}
+                {!isAuthenticated ? "LOGIN / REGISTER" : "MY ACCOUNT"} <MoveRight size={20} color="var(--accent-light)" />
               </Link>
+              
+              <div style={{ marginTop: '3rem', display: 'flex', gap: '1.5rem' }}>
+                <div style={{ width: '2px', height: '12px', background: 'var(--accent-light)' }} />
+                <div style={{ color: 'var(--text-dim)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em' }}>SYDNEY, AUSTRALIA</div>
+              </div>
             </div>
           </motion.div>
         )}
