@@ -45,8 +45,11 @@ export default function Hero() {
       className="hero" 
       style={{ 
         background: 'var(--bg)', 
-        padding: 'clamp(6rem, 15vh, 12rem) 0',
+        minHeight: 'calc(100vh - var(--header-h) - 40px)', // Adjust for header and announcement bar
+        display: 'flex',
+        alignItems: 'center',
         position: 'relative',
+        padding: '2rem 0',
         overflow: 'hidden',
         borderBottom: '1px solid var(--border)'
       }}
@@ -148,6 +151,8 @@ export default function Hero() {
 
           <div className="hero-img-box" style={{
             aspectRatio: '0.9/1',
+            maxHeight: '75vh',
+            width: '100%',
             background: 'linear-gradient(135deg, #0a0a0a 0%, #121212 100%)',
             border: '1px solid var(--border-heavy)',
             position: 'relative',
