@@ -20,6 +20,46 @@ export default function Header() {
     { label: 'SIMULATORS', type: 'sim', href: '/sim-rigs' },
   ];
 
+  const [activeSubMenu, setActiveSubMenu] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMobileMenuOpen]);
+
+  const subMenuData: Record<string, { label: string, items: { label: string, href: string }[] }> = {
+    gaming: {
+      label: 'GAMING SYSTEMS',
+      items: [
+        { label: 'ALL GAMING PCs', href: '/gaming' },
+        { label: 'RTX 4090 ULTIMATE', href: '/gaming?gpu=4090' },
+        { label: 'SFF COMPACT BUILDS', href: '/gaming?type=sff' },
+        { label: 'PRO STREAMING RIGS', href: '/gaming?type=streaming' },
+      ]
+    },
+    workstation: {
+      label: 'WORKSTATIONS',
+      items: [
+        { label: 'ALL WORKSTATIONS', href: '/workstations' },
+        { label: '3D & RENDERING', href: '/workstations?type=rendering' },
+        { label: 'AI & DEEP LEARNING', href: '/workstations?type=ai' },
+        { label: 'VIDEO PRODUCTION', href: '/workstations?type=video' },
+      ]
+    },
+    sim: {
+      label: 'SIMULATORS',
+      items: [
+        { label: 'ALL SIM RIGS', href: '/sim-rigs' },
+        { label: 'RACING SIMULATORS', href: '/sim-rigs?type=racing' },
+        { label: 'FLIGHT SIMULATORS', href: '/sim-rigs?type=flight' },
+      ]
+    }
+  };
+
   return (
     <>
       <header onMouseLeave={() => setActiveMenu(null)} style={{ 
@@ -116,7 +156,10 @@ export default function Header() {
                 {/* Mobile Toggle */}
                 <button 
                   className="show-tablet"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(!isMobileMenuOpen);
+                    setActiveSubMenu(null);
+                  }}
                   style={{ background: 'none', border: 'none', color: 'var(--white)', cursor: 'pointer', zIndex: 110, padding: '0.5rem' }}
                 >
                   {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -127,7 +170,7 @@ export default function Header() {
         <MegaMenu activeType={activeMenu} onClose={() => setActiveMenu(null)} />
       </header>
 
-      {/* Mobile Menu Drawer - MOVED OUTSIDE HEADER FOR CORRECT STACKING */}
+      {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -141,13 +184,15 @@ export default function Header() {
               right: 0, 
               bottom: 0, 
               left: 0,
-              backgroundColor: '#0a0a0a', // Solid black
-              zIndex: 9999, // Absolute top
-              padding: '8rem 2rem 4rem', 
+              backgroundColor: '#0a0a0a',
+              zIndex: 9999,
+              padding: '7rem 2rem 4rem', 
               display: 'flex', 
               flexDirection: 'column', 
               gap: '4rem',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              height: '100dvh',
+              width: '100vw'
             }}
           >
             <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10001 }}>
@@ -159,50 +204,111 @@ export default function Header() {
               </button>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', position: 'relative', zIndex: 10002 }}>
-              <div style={{ color: 'var(--accent-light)', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.4em', marginBottom: '-1rem' }}>MENU</div>
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.type} 
-                  href={link.href} 
+            <div style={{ position: 'relative', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <AnimatePresence mode="wait">
+                {!activeSubMenu ? (
+                  <motion.div 
+                    key="main"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}
+                  >
+                    <div style={{ color: 'var(--accent-light)', fontSize: '0.6rem', fontWeight: 800, letterSpacing: '0.4em', marginBottom: '-1rem' }}>MENU</div>
+                    {navLinks.map((link) => (
+                      <button 
+                        key={link.type} 
+                        onClick={() => setActiveSubMenu(link.type)}
+                        style={{ 
+                          background: 'none',
+                          border: 'none',
+                          textAlign: 'left',
+                          padding: 0,
+                          fontFamily: 'var(--font-d)', 
+                          fontSize: 'clamp(3rem, 12vw, 4.5rem)', 
+                          fontWeight: 900, 
+                          color: 'var(--white)', 
+                          textDecoration: 'none', 
+                          lineHeight: 0.9,
+                          textTransform: 'uppercase',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {link.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="sub"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}
+                  >
+                    <button 
+                      onClick={() => setActiveSubMenu(null)}
+                      style={{ 
+                        background: 'none', border: 'none', color: 'var(--accent-light)', 
+                        fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.8rem', 
+                        letterSpacing: '0.2em', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                        padding: 0
+                      }}
+                    >
+                      ← BACK TO MENU
+                    </button>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                      <div style={{ color: 'var(--white)', fontFamily: 'var(--font-d)', fontSize: '2.5rem', fontWeight: 900, letterSpacing: '0.05em' }}>
+                        {subMenuData[activeSubMenu].label}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1rem' }}>
+                        {subMenuData[activeSubMenu].items.map((item, i) => (
+                          <Link 
+                            key={i}
+                            href={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            style={{ 
+                              fontFamily: 'var(--font-d)', 
+                              fontSize: '1.25rem', 
+                              fontWeight: 700, 
+                              color: 'rgba(255,255,255,0.6)', 
+                              textDecoration: 'none',
+                              letterSpacing: '0.1em'
+                            }}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              
+              <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3rem' }}>
+                 <Link 
+                  href={!isAuthenticated ? "/account/login" : isAdmin ? "/admin" : "/account"} 
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ 
                     fontFamily: 'var(--font-d)', 
-                    fontSize: '3.5rem', 
                     fontWeight: 900, 
+                    fontSize: '1.5rem', 
+                    letterSpacing: '0.1em', 
                     color: 'var(--white)', 
                     textDecoration: 'none', 
-                    lineHeight: 0.9,
-                    textTransform: 'uppercase'
-                  }}
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem'
+                  }} 
                 >
-                  {link.label}
+                  {!isAuthenticated ? "LOGIN / REGISTER" : "MY ACCOUNT"} <MoveRight size={20} color="var(--accent-light)" />
                 </Link>
-              ))}
-            </div>
-            
-            <div style={{ marginTop: 'auto', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '3rem', position: 'relative', zIndex: 10002 }}>
-               <Link 
-                href={!isAuthenticated ? "/account/login" : isAdmin ? "/admin" : "/account"} 
-                onClick={() => setIsMobileMenuOpen(false)}
-                style={{ 
-                  fontFamily: 'var(--font-d)', 
-                  fontWeight: 900, 
-                  fontSize: '1.5rem', 
-                  letterSpacing: '0.1em', 
-                  color: 'var(--white)', 
-                  textDecoration: 'none', 
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem'
-                }} 
-              >
-                {!isAuthenticated ? "LOGIN / REGISTER" : "MY ACCOUNT"} <MoveRight size={20} color="var(--accent-light)" />
-              </Link>
-              
-              <div style={{ marginTop: '3rem', display: 'flex', gap: '1.5rem' }}>
-                <div style={{ width: '2px', height: '12px', background: 'var(--accent-light)' }} />
-                <div style={{ color: 'var(--text-dim)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em' }}>SYDNEY, AUSTRALIA</div>
+                
+                <div style={{ marginTop: '3rem', display: 'flex', gap: '1.5rem' }}>
+                  <div style={{ width: '2px', height: '12px', background: 'var(--accent-light)' }} />
+                  <div style={{ color: 'var(--text-dim)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em' }}>SYDNEY, AUSTRALIA</div>
+                </div>
               </div>
             </div>
           </motion.div>
