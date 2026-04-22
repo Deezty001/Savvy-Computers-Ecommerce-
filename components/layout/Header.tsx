@@ -31,31 +31,60 @@ export default function Header() {
     return () => { document.body.style.overflow = 'unset'; };
   }, [isMobileMenuOpen]);
 
-  const subMenuData: Record<string, { label: string, items: { label: string, href: string }[] }> = {
+  const subMenuData: Record<string, { label: string, sections: { category: string, items: { name: string, sub: string, href: string }[] }[] }> = {
     gaming: {
       label: 'GAMING SYSTEMS',
-      items: [
-        { label: 'ALL GAMING PCs', href: '/gaming' },
-        { label: 'RTX 4090 ULTIMATE', href: '/gaming?gpu=4090' },
-        { label: 'SFF COMPACT BUILDS', href: '/gaming?type=sff' },
-        { label: 'PRO STREAMING RIGS', href: '/gaming?type=streaming' },
+      sections: [
+        {
+          category: 'BY RESOLUTION',
+          items: [
+            { name: '1080p', sub: 'Esport Ready', href: '/gaming/1080p' },
+            { name: '1440p', sub: 'The Sweet Spot', href: '/gaming/1440p' },
+            { name: '4K', sub: 'Future Proof', href: '/gaming/4k' },
+            { name: '8K', sub: 'Ultimate Fidelity', href: '/gaming/8k' },
+          ]
+        },
+        {
+          category: 'BY STYLE',
+          items: [
+            { name: 'Stealth', sub: 'Zero RGB, All Power', href: '/gaming/stealth' },
+            { name: 'RGB', sub: 'Infinite Spectrum', href: '/gaming/rgb' },
+            { name: 'Compact', sub: 'Small Form Factor', href: '/gaming/compact' },
+          ]
+        }
       ]
     },
     workstation: {
       label: 'WORKSTATIONS',
-      items: [
-        { label: 'ALL WORKSTATIONS', href: '/workstations' },
-        { label: '3D & RENDERING', href: '/workstations?type=rendering' },
-        { label: 'AI & DEEP LEARNING', href: '/workstations?type=ai' },
-        { label: 'VIDEO PRODUCTION', href: '/workstations?type=video' },
+      sections: [
+        {
+          category: 'BY PROFESSION',
+          items: [
+            { name: 'Content Creation', sub: 'Adobe & DaVinci Ready', href: '/workstations/content' },
+            { name: 'CAD / Engineering', sub: 'Precision Modeling', href: '/workstations/cad' },
+            { name: 'AI / Machine Learning', sub: 'GPU Accelerated Compute', href: '/workstations/ai' },
+          ]
+        },
+        {
+          category: 'BY FORM FACTOR',
+          items: [
+            { name: 'Tower', sub: 'Infinite Expandability', href: '/workstations/tower' },
+            { name: 'Compact', sub: 'SFF Workspace Hero', href: '/workstations/compact' },
+            { name: 'Rack', sub: 'Server-Grade Stability', href: '/workstations/rack' },
+          ]
+        }
       ]
     },
     sim: {
       label: 'SIMULATORS',
-      items: [
-        { label: 'ALL SIM RIGS', href: '/sim-rigs' },
-        { label: 'RACING SIMULATORS', href: '/sim-rigs?type=racing' },
-        { label: 'FLIGHT SIMULATORS', href: '/sim-rigs?type=flight' },
+      sections: [
+        {
+          category: 'SIMULATORS',
+          items: [
+            { name: 'Racing Bundles', sub: 'Pro Cockpits & Chassis', href: '/sim-rigs/racing' },
+            { name: 'Flight Systems', sub: 'Full Avionic Control', href: '/sim-rigs/flight' },
+          ]
+        }
       ]
     }
   };
@@ -258,27 +287,42 @@ export default function Header() {
                       ← BACK TO MENU
                     </button>
                     
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
                       <div style={{ color: 'var(--white)', fontFamily: 'var(--font-d)', fontSize: '2.5rem', fontWeight: 900, letterSpacing: '0.05em' }}>
                         {subMenuData[activeSubMenu].label}
                       </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1rem' }}>
-                        {subMenuData[activeSubMenu].items.map((item, i) => (
-                          <Link 
-                            key={i}
-                            href={item.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            style={{ 
-                              fontFamily: 'var(--font-d)', 
-                              fontSize: '1.25rem', 
-                              fontWeight: 700, 
-                              color: 'rgba(255,255,255,0.6)', 
-                              textDecoration: 'none',
-                              letterSpacing: '0.1em'
-                            }}
-                          >
-                            {item.label}
-                          </Link>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                        {subMenuData[activeSubMenu].sections.map((section, idx) => (
+                          <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <div style={{ 
+                              color: 'var(--accent-light)', 
+                              fontSize: '0.65rem', 
+                              fontWeight: 800, 
+                              letterSpacing: '0.2em',
+                              borderBottom: '1px solid rgba(173, 133, 106, 0.1)',
+                              paddingBottom: '0.5rem'
+                            }}>
+                              {section.category}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                              {section.items.map((item, i) => (
+                                <Link 
+                                  key={i}
+                                  href={item.href}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  style={{ textDecoration: 'none' }}
+                                >
+                                  <div style={{ fontFamily: 'var(--font-d)', fontSize: '1.5rem', fontWeight: 800, color: 'var(--white)', lineHeight: 1 }}>
+                                    {item.name}
+                                  </div>
+                                  <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', marginTop: '0.25rem' }}>
+                                    {item.sub}
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>
