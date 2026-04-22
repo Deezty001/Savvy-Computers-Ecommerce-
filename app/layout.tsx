@@ -36,6 +36,13 @@ export const metadata: Metadata = {
   }
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -47,11 +54,14 @@ export default function RootLayout({
         background: 'var(--bg)', 
         color: 'var(--text)', 
         WebkitFontSmoothing: 'antialiased',
-        MozOsxFontSmoothing: 'grayscale'
+        MozOsxFontSmoothing: 'grayscale',
+        margin: 0,
+        padding: 0,
+        overflowX: 'hidden'
       }}>
         <AuthProvider>
           <CartProvider>
-            <div className="flex min-h-screen flex-col">
+            <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', width: '100%', overflowX: 'hidden' }}>
               <AnnouncementBar />
               <Header />
               <div className="flex-1">

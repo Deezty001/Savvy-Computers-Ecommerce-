@@ -193,9 +193,9 @@ export default function CategoryLayout({
         </div>
       </div>
 
-      <div className="wrap" style={{ display: 'flex', gap: '6rem', padding: '6rem 0 15rem' }}>
+      <div className="wrap category-content" style={{ display: 'flex', gap: '6rem', padding: '6rem 0 15rem' }}>
         {/* Sidebar Filters */}
-        <aside style={{ width: '220px', flexShrink: 0 }}>
+        <aside className="hide-tablet" style={{ width: '220px', flexShrink: 0 }}>
           <div style={{ position: 'sticky', top: '140px', display: 'flex', flexDirection: 'column', gap: '4rem' }}>
             <SidebarGroup 
               label="PROCESSOR" 
@@ -231,7 +231,9 @@ export default function CategoryLayout({
             alignItems: 'center', 
             paddingBottom: '2.5rem', 
             marginBottom: '3rem',
-            borderBottom: '1px solid rgba(255,255,255,0.05)'
+            borderBottom: '1px solid rgba(255,255,255,0.05)',
+            flexWrap: 'wrap',
+            gap: '1.5rem'
           }}>
             <div style={{ 
               fontFamily: 'var(--font-d)', 
@@ -253,7 +255,7 @@ export default function CategoryLayout({
 
           {/* Product Grid */}
           {filteredProducts.length > 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+            <div className="res-grid-3">
               {filteredProducts.map((product, idx) => (
                 <motion.div
                   key={product.id}
@@ -290,6 +292,9 @@ export default function CategoryLayout({
         .filter-link-clean:hover { color: var(--white) !important; }
         .sidebar-opt { cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.75rem; }
         .sidebar-opt:hover { color: var(--white) !important; padding-left: 4px; }
+        @media (max-width: 1024px) {
+          .category-content { flex-direction: column; gap: 4rem !important; }
+        }
       `}} />
     </main>
   );

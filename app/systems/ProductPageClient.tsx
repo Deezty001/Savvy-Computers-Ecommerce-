@@ -195,7 +195,7 @@ export default function ProductPageClient({ product, upgrades, recommendations }
             <h1 style={{ 
               fontFamily: 'var(--font-d)', 
               fontWeight: 900, 
-              fontSize: '3.5rem', 
+              fontSize: 'var(--fs-2xl)', 
               lineHeight: 1, 
               letterSpacing: '0.02em',
               textTransform: 'uppercase',
