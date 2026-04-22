@@ -43,13 +43,32 @@ export default function TopSellers() {
           <div style={{ width: '40px', height: '1px', background: 'var(--accent-light)', margin: '1.5rem auto', opacity: 0.3 }}></div>
         </div>
 
-        <div className="res-grid-4">
+        <div 
+          className="product-slider-container"
+          style={{ 
+            display: 'flex', 
+            gap: '1.5rem', 
+            overflowX: 'auto', 
+            paddingBottom: '2rem',
+            paddingRight: 'var(--wrap-px)',
+            scrollSnapType: 'x mandatory',
+            scrollbarWidth: 'none', // Firefox
+            msOverflowStyle: 'none', // IE/Edge
+          }}
+        >
           {products.map((p, idx) => (
-            <div key={idx} className="pc-card-anim">
+            <div 
+              key={idx} 
+              className="pc-card-anim" 
+              style={{ 
+                flex: '0 0 320px', // Smaller card width
+                scrollSnapAlign: 'start' 
+              }}
+            >
               <ProductCard 
                 name={p.name}
-                cpu={p.specs.cpu}
-                gpu={p.specs.gpu}
+                cpu={p.specs.cpu?.split('|')[0] || p.specs.cpu}
+                gpu={p.specs.gpu?.split('|')[0] || p.specs.gpu}
                 price={`$${p.price.toLocaleString()}`}
                 slug={p.slug}
                 img={p.images[0] || "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=800"}
@@ -63,6 +82,9 @@ export default function TopSellers() {
             </div>
           ))}
         </div>
+        <style jsx>{`
+          .product-slider-container::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        `}</style>
       </div>
     </section>
   );

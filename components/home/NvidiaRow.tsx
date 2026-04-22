@@ -92,13 +92,35 @@ export default function NvidiaRow() {
           <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.1)', margin: '1.5rem auto' }}></div>
         </div>
 
-        <div className="res-grid-4">
+        <div 
+          className="product-slider-container"
+          style={{ 
+            display: 'flex', 
+            gap: '1.5rem', 
+            overflowX: 'auto', 
+            paddingBottom: '2rem',
+            paddingRight: 'var(--wrap-px)',
+            scrollSnapType: 'x mandatory',
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
           {nvidiaProducts.map((p, idx) => (
-            <div key={idx} className="nv-card-anim">
+            <div 
+              key={idx} 
+              className="nv-card-anim"
+              style={{ 
+                flex: '0 0 320px', 
+                scrollSnapAlign: 'start' 
+              }}
+            >
               <ProductCard {...p} />
             </div>
           ))}
         </div>
+        <style jsx>{`
+          .product-slider-container::-webkit-scrollbar { display: none; }
+        `}</style>
       </div>
     </section>
   );
