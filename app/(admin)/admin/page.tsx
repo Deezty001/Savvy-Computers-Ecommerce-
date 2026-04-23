@@ -28,64 +28,23 @@ export default function BuildLab() {
 
         {/* Action Priority Bar */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-          <PriorityNotice icon={<AlertCircle color="#f87171" size={18} />} label="CRITICAL DELAYS" count="2" />
-          <PriorityNotice icon={<Clock color="var(--accent-light)" size={18} />} label="DUE FOR DISPATCH" count="5" />
-          <PriorityNotice icon={<Package color="#60a5fa" size={18} />} label="PARTS AWAITING" count="8" />
+          <PriorityNotice icon={<AlertCircle color="#f87171" size={18} />} label="CRITICAL DELAYS" count="0" />
+          <PriorityNotice icon={<Clock color="var(--accent-light)" size={18} />} label="DUE FOR DISPATCH" count="0" />
+          <PriorityNotice icon={<Package color="#60a5fa" size={18} />} label="PARTS AWAITING" count="0" />
         </div>
 
         {/* The Build Queue */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           <h2 style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-dim)', letterSpacing: '0.15em', marginBottom: '0.25rem' }}>ACTIVE DEPLOYMENTS</h2>
           
-          <BuildCard 
-            id="#SV-9021"
-            name="APEX CORE V3"
-            customer="Johnathan Davis"
-            deadline="SHIPS IN 4H"
-            status="BENCHMARKING"
-            progress={90}
-            isExpanded={expandedId === '#SV-9021'}
-            onToggle={() => setExpandedId(expandedId === '#SV-9021' ? null : '#SV-9021')}
-            specs={[
-              "Intel Core i9-14900K",
-              "NVIDIA RTX 4090 Founders Edition",
-              "64GB DDR5 Dominator Titanium",
-              "2TB Gen5 NVMe SSD"
-            ]}
-          />
-
-          <BuildCard 
-            id="#SV-9025"
-            name="STEALTH WORKSTATION"
-            customer="Elena Rodriguez"
-            deadline="SHIPS TOMORROW"
-            status="CABLES"
-            progress={65}
-            isExpanded={expandedId === '#SV-9025'}
-            onToggle={() => setExpandedId(expandedId === '#SV-9025' ? null : '#SV-9025')}
-            specs={[
-              "AMD Ryzen 9 7950X",
-              "NVIDIA RTX 4080 Super",
-              "128GB Pro Memory Kit",
-              "4TB Studio Storage Array"
-            ]}
-          />
-
-          <BuildCard 
-            id="#SV-9028"
-            name="ULTRA SIM RIG"
-            customer="Marcus Lynch"
-            deadline="DUE IN 3 DAYS"
-            status="ASSEMBLY"
-            progress={30}
-            isExpanded={expandedId === '#SV-9028'}
-            onToggle={() => setExpandedId(expandedId === '#SV-9028' ? null : '#SV-9028')}
-            specs={[
-              "Intel Core i7-14700K",
-              "NVIDIA RTX 4070 Ti Super",
-              "32GB Gaming Memory"
-            ]}
-          />
+          <div style={{ 
+            padding: '4rem', textAlign: 'center', background: 'rgba(255,255,255,0.01)', 
+            border: '1px dashed rgba(255,255,255,0.05)', borderRadius: '4px' 
+          }}>
+            <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.1em' }}>
+              NO ACTIVE DEPLOYMENTS IN QUEUE
+            </div>
+          </div>
         </div>
 
       </div>
@@ -93,7 +52,7 @@ export default function BuildLab() {
   );
 }
 
-function PriorityNotice({ icon, label, count }: any) {
+function PriorityNotice({ icon, label, count }: { icon: React.ReactNode, label: string, count: string }) {
   return (
     <div style={{ 
       background: 'rgba(255,255,255,0.03)', 
@@ -114,7 +73,10 @@ function PriorityNotice({ icon, label, count }: any) {
   );
 }
 
-function BuildCard({ id, name, customer, deadline, status, progress, specs, isExpanded, onToggle }: any) {
+function BuildCard({ id, name, customer, deadline, status, progress, specs, isExpanded, onToggle }: { 
+  id: string, name: string, customer: string, deadline: string, status: string, 
+  progress: number, specs: string[], isExpanded: boolean, onToggle: () => void 
+}) {
   const stages = [
     { label: "PARTS", reached: progress >= 20 },
     { label: "PREP", reached: progress >= 40 },

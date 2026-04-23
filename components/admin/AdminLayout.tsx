@@ -5,16 +5,17 @@ import Link from 'next/link';
 import { 
   LayoutDashboard, Package, ShoppingCart, 
   Settings, Users, BarChart3, 
-  LogOut, Menu, X, Bell,
-  Search, Plus, Filter,
-  TrendingUp, DollarSign, Clock, CheckCircle
+  Menu, X, Bell,
+  Search, Plus, Filter, Cpu, Database,
+  TrendingUp, DollarSign, Clock, CheckCircle,
+  Briefcase, ShieldCheck, Box, Megaphone
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 export default function AdminLayout({ children, title }: { children: React.ReactNode, title?: string }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const { logout, profile } = useAuth();
+  const { profile } = useAuth();
   const pathname = usePathname();
 
   return (
@@ -43,33 +44,18 @@ export default function AdminLayout({ children, title }: { children: React.React
         </div>
 
         {/* Nav Links */}
-        <nav style={{ padding: '1rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', flex: 1 }}>
-          <AdminNavItem icon={<LayoutDashboard size={18} />} label="DASHBOARD" href="/admin" active={pathname === '/admin'} sidebarOpen={sidebarOpen} />
-          <AdminNavItem icon={<ShoppingCart size={18} />} label="ORDERS" href="/admin/orders" active={pathname === '/admin/orders'} sidebarOpen={sidebarOpen} />
-          <AdminNavItem icon={<Package size={18} />} label="INVENTORY" href="/admin/inventory" active={pathname === '/admin/inventory'} sidebarOpen={sidebarOpen} />
-          <AdminNavItem icon={<BarChart3 size={18} />} label="ANALYTICS" href="/admin/analytics" active={pathname === '/admin/analytics'} sidebarOpen={sidebarOpen} />
-          <AdminNavItem icon={<Users size={18} />} label="CUSTOMERS" href="/admin/customers" active={pathname === '/admin/customers'} sidebarOpen={sidebarOpen} />
-          <div style={{ margin: '1rem 0 0.5rem', padding: '0 1rem', fontSize: '0.55rem', fontWeight: 800, color: 'rgba(255,255,255,0.2)', letterSpacing: '0.2em' }}>
-            {sidebarOpen ? 'SYSTEM' : '•••'}
-          </div>
-          <AdminNavItem icon={<Settings size={18} />} label="SETTINGS" href="/admin/settings" active={pathname === '/admin/settings'} sidebarOpen={sidebarOpen} />
+        <nav style={{ padding: '0.75rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '0.15rem', flex: 1, overflowY: 'auto' }}>
+          <AdminNavItem icon={<LayoutDashboard size={17} />} label="DASHBOARD" href="/admin" active={pathname === '/admin'} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<Briefcase size={17} />} label="OPERATIONS" href="/admin/operations" active={pathname.startsWith('/admin/operations')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<Cpu size={17} />} label="WORKSHOP" href="/admin/workshop" active={pathname.startsWith('/admin/workshop')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<ShieldCheck size={17} />} label="WARRANTY" href="/admin/warranty" active={pathname.startsWith('/admin/warranty')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<Database size={17} />} label="CATALOGUE" href="/admin/catalogue" active={pathname.startsWith('/admin/catalogue')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<Box size={17} />} label="INVENTORY" href="/admin/inventory" active={pathname.startsWith('/admin/inventory')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<Megaphone size={17} />} label="MARKETING" href="/admin/marketing" active={pathname.startsWith('/admin/marketing')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<BarChart3 size={17} />} label="REPORTS" href="/admin/reports" active={pathname.startsWith('/admin/reports')} sidebarOpen={sidebarOpen} />
+          <AdminNavItem icon={<Settings size={17} />} label="SETTINGS" href="/admin/settings" active={pathname.startsWith('/admin/settings')} sidebarOpen={sidebarOpen} />
         </nav>
 
-        <div style={{ padding: '1.25rem 0.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <button 
-            onClick={logout}
-            style={{ 
-              width: '100%', display: 'flex', alignItems: 'center', gap: '1rem', 
-              padding: '0.5rem 1rem', background: 'none', border: 'none', 
-              color: 'var(--text-dim)', cursor: 'pointer', fontFamily: 'var(--font-d)',
-              fontWeight: 800, fontSize: '0.65rem', letterSpacing: '0.1em'
-            }}
-            className="hover-white"
-          >
-            <LogOut size={16} />
-            {sidebarOpen && 'SIGN OUT'}
-          </button>
-        </div>
 
         <button 
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -155,14 +141,14 @@ function AdminNavItem({ icon, label, href, active = false, sidebarOpen }: { icon
       href={href}
       className={`nav-item ${active ? 'active' : ''}`}
       style={{ 
-        display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem 1rem', 
+        display: 'flex', alignItems: 'center', gap: '1.25rem', padding: '0.85rem 1.25rem', 
         borderRadius: '4px', textDecoration: 'none', color: active ? 'var(--accent-light)' : 'var(--text-dim)',
         transition: 'all 0.3s ease'
       }}
     >
       <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</span>
       {sidebarOpen && (
-        <span style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.65rem', letterSpacing: '0.1em' }}>{label}</span>
+        <span style={{ fontFamily: 'var(--font-d)', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '0.12em' }}>{label}</span>
       )}
     </Link>
 

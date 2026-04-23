@@ -5,10 +5,6 @@ import React from "react";
 import type { ReactNode } from "react";
 import { AuthProvider } from "@/lib/auth/AuthContext";
 import { CartProvider } from "@/lib/cart/CartContext";
-import MiniCart from "@/components/cart/MiniCart";
-import AnnouncementBar from "@/components/layout/AnnouncementBar";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -61,15 +57,7 @@ export default function RootLayout({
       }}>
         <AuthProvider>
           <CartProvider>
-            <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', width: '100%', overflowX: 'hidden' }}>
-              <AnnouncementBar />
-              <Header />
-              <div className="flex-1">
-                {children}
-              </div>
-              <Footer />
-            </div>
-            <MiniCart />
+            {children}
           </CartProvider>
         </AuthProvider>
       </body>

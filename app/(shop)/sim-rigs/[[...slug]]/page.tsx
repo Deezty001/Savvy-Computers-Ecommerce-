@@ -37,7 +37,7 @@ export default async function SimRigsPage({ params }: { params: { slug?: string[
     }
   } catch (err: any) {
     console.warn('Sim Rigs Page: Falling back to static data due to:', err?.message || 'Unknown error');
-    products = staticProducts.filter(p => p.category === 'sim');
+    products = staticProducts.filter((p: any) => p.category === 'sim');
   }
 
   return (

@@ -8,7 +8,7 @@ export const revalidate = 900; // Balanced: 15 minutes
 
 export async function generateStaticParams() {
   const { data: products } = await supabase.from('products').select('slug');
-  return (products || []).map((product) => ({
+  return (products || []).map((product: { slug: string }) => ({
     slug: product.slug,
   }));
 }
@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
       <ProductPageClient 
         product={product} 
         upgrades={upgrades || []} 
-        recommendations={recommendations || []} 
+        recommendations={(recommendations || []).filter((p: { category: string }) => p.category === 'sim')} 
       />
     </Suspense>
   );
