@@ -3,7 +3,7 @@
 import React from 'react';
 import Hero from '@/components/home/Hero';
 import Ticker from '@/components/home/Ticker';
-import TopSellers from '@/components/home/TopSellers';
+import NewTopSellers from '@/components/home/NewTopSellers';
 import Categories from '@/components/home/Categories';
 import Showcase from '@/components/home/Showcase';
 import SavvyStandard from '@/components/home/SavvyStandard';
@@ -18,7 +18,7 @@ export default function HomePage() {
     <main style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <Hero />
       <Ticker text="PRECISION ENGINEERING // HIGH PERFORMANCE COMPUTING // HANDCRAFTED IN SYDNEY // 72H STRESS VALIDATION" />
-      <TopSellers />
+      <NewTopSellers />
       <Categories />
       <Showcase />
       <SavvyStandard />
